@@ -1,0 +1,12 @@
+.d-none {
+    display: none;
+}
+
+.userinfo-box {
+    #user {
+        &-avatar {
+            width: 20px;
+            height: 20px;
+        }
+    }
+}

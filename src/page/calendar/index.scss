@@ -1,0 +1,13 @@
+.calendar {
+    .week {
+        display: flex;
+        .day {
+            display: block;
+            width: 20px;
+            height: 20px;
+            &.is-selected {
+                background-color: gray;
+            }
+        }
+    }
+}

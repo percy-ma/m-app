@@ -1,25 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect } from "react";
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 
-function App() {
+import GithubUserSearch from "./page/githubUserSearch";
+import PasswordGenerator from "./page/passwordGenerator";
+import Gobang from './page/gobang'
+import Home from "./page/home";
+import Calendar from "./page/calendar";
+
+export default function App() {
+  useEffect(() => {
+    document.title = "APP";
+
+    return () => {};
+  });
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <BrowserRouter>
+        <div>
+          <Link to="/">Home</Link>
+          <Link to="/calendar">Calendar</Link>
+          <Link to="gobang">Gobang</Link>
+          <Link to="github-user-search">Github User Search</Link>
+          <Link to="password-generator">Password Generator</Link>
+        </div>
+        <Routes>
+          <Route index element={<Home />}/>
+          <Route path="calendar" element={<Calendar />} />
+          <Route path="gobang" element={<Gobang />} />
+          <Route path="github-user-search" element={<GithubUserSearch />} />
+          <Route path="password-generator" element={<PasswordGenerator />} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
-
-export default App;
