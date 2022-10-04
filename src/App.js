@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 
+import Login from './page/login'
 import GithubUserSearch from "./page/githubUserSearch";
 import PasswordGenerator from "./page/passwordGenerator";
 import Gobang from './page/gobang'
@@ -19,6 +20,7 @@ export default function App() {
       <BrowserRouter>
         <div>
           <Link to="/">Home</Link>
+          <Link to="/login">Login</Link>
           <Link to="/calendar">Calendar</Link>
           <Link to="gobang">Gobang</Link>
           <Link to="github-user-search">Github User Search</Link>
@@ -26,6 +28,7 @@ export default function App() {
         </div>
         <Routes>
           <Route index element={<Home />}/>
+          <Route path="login" element={<Login />}/>
           <Route path="calendar" element={<Calendar />} />
           <Route path="gobang" element={<Gobang />} />
           <Route path="github-user-search" element={<GithubUserSearch />} />
