@@ -3,17 +3,13 @@ import { useState } from 'react';
 import dayjs from 'dayjs';
 import { LinkThree, LocalTwo, City, Twitter } from '@icon-park/react';
 import './index.scss';
+import { Input } from '../../components';
 
 export default function GithubUserSearch() {
   const [username, setUsername] = useState('');
   const [userProfile, setUserProfile] = useState({});
   const [hasProfile, setHasProfile] = useState(false);
   const [notfound, setNotfound] = useState(false);
-
-  const usernameChange = (e) => {
-    let value = e.target.value;
-    setUsername(value);
-  };
 
   const searchUser = () => {
     setNotfound(false);
@@ -34,60 +30,107 @@ export default function GithubUserSearch() {
   };
 
   return (
-    <div>
+    <div className="github-user-search">
+      <h3 className="title">Github User Search</h3>
       <div className="input-box">
-        <input
-          type="text"
-          value={username}
-          onChange={usernameChange}
+        <Input
           placeholder="Search Github username"
+          value={username}
+          onChange={setUsername}
         />
-        <button onClick={searchUser}>Search</button>
+        <button className='primary-btn' id="search-btn" onClick={searchUser}>
+          Search
+        </button>
       </div>
       <div className={notfound ? 'notfound-box' : 'notfound-box d-none'}>
         User Not Found!
       </div>
-      <div className={hasProfile ? 'userinfo-box' : 'userinfo-box d-none'}>
-        <div id="user-url">{userProfile.html_url}</div>
+      <div className={hasProfile ? 'userinfo-box card' : 'userinfo-box card d-none'}>
+        <div id="user-url" className="d-none">
+          {userProfile.html_url}
+        </div>
         <img
           id="user-avatar"
           src={userProfile.avatar_url}
           alt={userProfile.login}
+          title={userProfile.login}
         />
-        <div id="user-username">{userProfile.login}</div>
-        <div id="user-name">{userProfile.name}</div>
-        <div id="user-joindate">
-          Joined {dayjs(userProfile.created_at).format('DD MMM YYYY')}
-        </div>
-        <div id="user-repos">
-          <span>Repos</span>
-          <span>{userProfile.public_repos}</span>
-        </div>
-        <div id="user-followers">
-          <span>Followers</span>
-          <span>{userProfile.followers}</span>
-        </div>
-        <div id="user-following">
-          <span>Following</span>
-          <span>{userProfile.following}</span>
-        </div>
-        <div id="user-location">
-          <LocalTwo theme="outline" size="14" fill="#333" />
-          {userProfile.location ? userProfile.location : 'Not Available'}
-        </div>
-        <div id="user-company">
-          <City theme="outline" size="14" fill="#333" />
-          {userProfile.company ? userProfile.company : 'Not Available'}
-        </div>
-        <div id="user-blog">
-          <LinkThree theme="outline" size="14" fill="#333" />
-          {userProfile.blog ? userProfile.blog : 'Not Available'}
-        </div>
-        <div id="user-twitter">
-          <Twitter theme="outline" size="14" fill="#333" />
-          {userProfile.twitter_username
-            ? userProfile.twitter_username
-            : 'Not Available'}
+        <div className="user-content">
+          <div id="user-name">
+            <a href={userProfile.html_url}>{userProfile.name}</a>
+          </div>
+          <div id="user-username">{userProfile.login}</div>
+          <div id="user-joindate">
+            Joined {dayjs(userProfile.created_at).format('DD MMM YYYY')}
+          </div>
+          <div className="user-data">
+            <div id="user-repos" className="user-data-item">
+              <span>Repos</span>
+              <span>{userProfile.public_repos}</span>
+            </div>
+            <div id="user-followers" className="user-data-item">
+              <span>Followers</span>
+              <span>{userProfile.followers}</span>
+            </div>
+            <div id="user-following" className="user-data-item">
+              <span>Following</span>
+              <span>{userProfile.following}</span>
+            </div>
+          </div>
+          <table>
+            <tbody>
+              <tr>
+                <td>
+                  <div id="user-location" className="user-else-item">
+                    <LocalTwo theme="outline" size="14" fill="#333" />
+                    {userProfile.location ? (
+                      <div className="user-else-text">
+                        {userProfile.location}
+                      </div>
+                    ) : (
+                      <div className="not-available-data">Not Available</div>
+                    )}
+                  </div>
+                </td>
+                <td>
+                  <div id="user-company" className="user-else-item">
+                    <City theme="outline" size="14" fill="#333" />
+                    {userProfile.company ? (
+                      <div className="user-else-text">
+                        {userProfile.company}
+                      </div>
+                    ) : (
+                      <div className="not-available-data">Not Available</div>
+                    )}
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div id="user-blog" className="user-else-item">
+                    <LinkThree theme="outline" size="14" fill="#333" />
+                    {userProfile.blog ? (
+                      <div className="user-else-text">{userProfile.blog}</div>
+                    ) : (
+                      <div className="not-available-data">Not Available</div>
+                    )}
+                  </div>
+                </td>
+                <td>
+                  <div id="user-twitter" className="user-else-item">
+                    <Twitter theme="outline" size="14" fill="#333" />
+                    {userProfile.twitter_username ? (
+                      <div className="user-else-text">
+                        {userProfile.twitter_username}
+                      </div>
+                    ) : (
+                      <div className="not-available-data">Not Available</div>
+                    )}
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>

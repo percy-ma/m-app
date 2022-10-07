@@ -1,13 +1,40 @@
 .calendar {
-    .week {
-        display: flex;
-        .day {
-            display: block;
-            width: 20px;
-            height: 20px;
-            &.is-selected {
-                background-color: gray;
-            }
-        }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    &-text {
+      font-size: 18px;
+      font-weight: 700;
     }
+    .month-btn {
+      cursor: pointer;
+      margin-top: 2px;
+    }
+  }
+  .week {
+    display: flex;
+    .day {
+      display: block;
+      width: 30px;
+      height: 30px;
+      text-align: center;
+      line-height: 28px;
+      margin: 3px;
+      border: 2px solid var(--white);
+      cursor: pointer;
+      &:hover {
+        border: 2px solid var(--border);
+      }
+      &.is-selected {
+        border: 2px solid var(--border-hover);
+      }
+      &.not-this-month {
+        color: var(--gray);
+      }
+    }
+  }
 }

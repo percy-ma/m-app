@@ -1,68 +1,81 @@
 .password-generator {
-	width: 400px;
+  .container {
+    width: 420px;
+  }
 
-	#pwd-box {
-		display: flex;
-		border: 1px solid #666;
+  #pwd-box {
+    display: flex;
+    padding: 5px 10px;
 
-		.pwd-text {
-			display: block;
-		}
+    .pwd-text {
+      display: block;
+      flex: 1;
+    }
 
-		.copy-icon {
-			cursor: pointer;
-		}
-	}
+    .copy-icon {
+      cursor: pointer;
+    }
+  }
 
-	.include-field {
-		display: flex;
-		align-items: center;
+  #selector-box {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
 
-		.include-checkbox {
-			display: block;
-			border: 1px solid #666;
-			height: 20px;
-			width: 20px;
-			border-radius: 5px;
-			cursor: pointer;
-		}
+    .length-selector {
+      .text {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .number {
+          font-size: 20px;
+          font-weight: 700;
+          color: var(--gray-dark);
+        }
+      }
+    }
 
-		.include-checkbox-checked {
-			background-color: #666;
-		}
-	}
+    .include-field {
+      display: flex;
+      align-items: center;
+      margin: 10px 0;
 
+      .include-checkbox {
+        display: block;
+        border: 1px solid #666;
+        height: 14px;
+        width: 14px;
+        cursor: pointer;
+        margin-right: 10px;
+        position: relative;
+      }
 
-	.rc-slider {
-		position: relative;
-		width: 100%;
-		height: 14px;
-		padding: 5px 0;
+      .include-checkbox-checked {
+        &::after {
+          display: block;
+          content: '';
+          width: 8px;
+          height: 8px;
+          background-color: var(--gray-dark);
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%, -50%);
+        }
+      }
+    }
+  }
 
-		.rc-slider-rail {
-			position: absolute;
-			width: 100%;
-			height: 4px;
-			background: #e9e9e9;
-		}
-
-		.rc-slider-track {
-			position: absolute;
-			height: 4px;
-			background: red;
-		}
-
-		.rc-slider-handle {
-			position: absolute;
-			width: 14px;
-			height: 14px;
-			margin-top: -5px;
-			background: #fff;
-			border-radius: 50%;
-			cursor: grab;
-			border: 2px solid #2db7f5;
-		}
-	}
-
-
+  #generate-btn {
+    background-color: var(--white);
+    border: 2px solid var(--border);
+    padding: 10px;
+    margin: 10px 0;
+    text-transform: uppercase;
+    font-weight: 600;
+    cursor: pointer;
+    &:hover {
+      border: 2px solid var(--border-hover);
+    }
+  }
 }

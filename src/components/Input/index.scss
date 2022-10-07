@@ -1,0 +1,16 @@
+.app-input {
+  display: flex;
+  flex-direction: column;
+  // margin: 8px 0;
+  label {
+    margin-bottom: 3px;
+  }
+  input {
+    padding: 5px 8px;
+    border: 2px solid var(--border);
+    outline: none;
+    &:focus {
+      border: 2px solid var(--border-hover);
+    }
+  }
+}

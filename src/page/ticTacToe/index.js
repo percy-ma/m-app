@@ -1,11 +1,12 @@
-import { useState, useEffect } from "react";
-import "./index.scss";
+import { useState, useEffect } from 'react';
+import { Error, HandleRound } from '@icon-park/react';
+import './index.scss';
 
-export default function Gobang() {
-  const [mode, setMode] = useState("single");
-  const [currentPlayer, setCurrentPlayer] = useState("x");
-  const [squareArr, setSquareArr] = useState(new Array(9).fill(""));
-  const [winner, setWinner] = useState("");
+export default function TicTacToe() {
+  const [mode, setMode] = useState('single');
+  const [currentPlayer, setCurrentPlayer] = useState('x');
+  const [squareArr, setSquareArr] = useState(new Array(9).fill(''));
+  const [winner, setWinner] = useState('');
   const WIN_RESULT = [
     [0, 1, 2],
     [3, 4, 5],
@@ -33,13 +34,13 @@ export default function Gobang() {
         return squareArr[a];
       }
     }
-    return "";
+    return '';
   };
   const handleWin = (notWinFun) => {
     let win = getWinner();
     if (win) {
       setWinner(win);
-      console.log("win: ", win);
+      console.log('win: ', win);
     } else {
       if (notWinFun) {
         notWinFun();
@@ -51,11 +52,11 @@ export default function Gobang() {
       squareArr[index] = currentPlayer;
       setSquareArr([...squareArr]);
       handleWin(() => {
-        if (mode === "single") {
+        if (mode === 'single') {
           autoPlay(currentPlayer);
           handleWin();
         } else {
-          setCurrentPlayer(currentPlayer === "x" ? "o" : "x");
+          setCurrentPlayer(currentPlayer === 'x' ? 'o' : 'x');
         }
       });
     }
@@ -64,24 +65,24 @@ export default function Gobang() {
   const autoPlay = (currentPlayer) => {
     let randomIndexArr = [];
     for (let i = 0; i < squareArr.length; i++) {
-      if (squareArr[i] === "") {
+      if (squareArr[i] === '') {
         randomIndexArr.push(i);
       }
     }
     let randomIndex =
       randomIndexArr[Math.floor(Math.random() * randomIndexArr.length)];
     let playTimer = setTimeout(() => {
-        squareArr[randomIndex] = currentPlayer === "x" ? "o" : "x";
-        setSquareArr([...squareArr]);
-        clearTimeout(playTimer)
-    }, 1000)
+      squareArr[randomIndex] = currentPlayer === 'x' ? 'o' : 'x';
+      setSquareArr([...squareArr]);
+      clearTimeout(playTimer);
+    }, 1000);
   };
 
   const clearBoard = () => {
-    squareArr.fill("");
+    squareArr.fill('');
     setSquareArr([...squareArr]);
-    setCurrentPlayer("x");
-    setWinner("");
+    setCurrentPlayer('x');
+    setWinner('');
   };
 
   useEffect(() => {
@@ -89,25 +90,14 @@ export default function Gobang() {
   });
 
   return (
-    <div className="gobang">
-      <div>
+    <div className="tic-tac-toe content-middle">
+      <h3 className="title">Tic Tac Toe</h3>
+      <div id="mode-select">
         <label htmlFor="mode">Mode</label>
-        <input
-          type="radio"
-          name="mode"
-          value="single"
-          checked={mode === "single"}
-          onChange={changeMode}
-        />
-        Single
-        <input
-          type="radio"
-          name="mode"
-          value="double"
-          checked={mode === "double"}
-          onChange={changeMode}
-        />
-        Double
+        <select name="mode" onChange={changeMode}>
+          <option value="single">Single</option>
+          <option value="double">Double</option>
+        </select>
       </div>
       <div className="currentPlayer">Current Player: {currentPlayer}</div>
       <div className="board">
@@ -129,13 +119,22 @@ export default function Gobang() {
 
 const Square = (props) => {
   const handleChange = () => {
-    if (props.player === "") {
+    if (props.player === '') {
       props.handlePlay();
     }
   };
   return (
     <div className="square" onClick={handleChange}>
-      {props.player}
+      {props.player === 'x' && (
+        <span className="player-x">
+          <Error theme="filled" size="16" fill="#ef4444" />
+        </span>
+      )}
+      {props.player === 'o' && (
+        <span className="player-o">
+          <HandleRound theme="filled" size="16" fill="#7dd3fc" />
+        </span>
+      )}
     </div>
   );
 };
