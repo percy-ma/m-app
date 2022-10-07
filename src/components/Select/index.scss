@@ -1,0 +1,24 @@
+.app-select {
+  position: relative;
+  .select-value {
+    display: block;
+    width: 100px;
+    height: 20px;
+    border: 1px solid var(--border);
+    cursor: pointer;
+  }
+  .select-placeholder {
+    color: var(--gray-dark);
+  }
+  .app-options {
+    position: absolute;
+    background-color: var(--white);
+    width: 100%;
+    .app-option {
+      cursor: pointer;
+      border: 1px solid var(--border);
+    }
+  }
+}
+
+

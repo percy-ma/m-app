@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Error, HandleRound } from '@icon-park/react';
+import { Select, Option } from '../../components'
 import './index.scss';
 
 export default function TicTacToe() {
@@ -19,8 +20,8 @@ export default function TicTacToe() {
     [2, 4, 6],
   ];
 
-  const changeMode = (e) => {
-    setMode(e.target.value);
+  const changeMode = (mode) => {
+    setMode(mode);
     clearBoard();
   };
   const getWinner = () => {
@@ -93,11 +94,11 @@ export default function TicTacToe() {
     <div className="tic-tac-toe content-middle">
       <h3 className="title">Tic Tac Toe</h3>
       <div id="mode-select">
-        <label htmlFor="mode">Mode</label>
-        <select name="mode" onChange={changeMode}>
-          <option value="single">Single</option>
-          <option value="double">Double</option>
-        </select>
+        <div>Mode</div>
+        <Select value={mode} onChange={changeMode}>
+          <Option value="single" default>Single</Option>
+          <Option value="double">Double</Option>
+        </Select>
       </div>
       <div className="currentPlayer">Current Player: {currentPlayer}</div>
       <div className="board">
