@@ -12,7 +12,7 @@ export default function Avatar(props) {
   
   return (
     <div
-      className="img"
+      className="app-avatar"
       dangerouslySetInnerHTML={{
         __html: svg,
       }}

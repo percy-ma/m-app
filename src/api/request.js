@@ -1,18 +1,16 @@
 import axios from 'axios';
-import Cookie from 'js-cookie';
+import Cookies from 'js-cookie';
 
 const createAxiosByinterceptors = (config) => {
   const instance = axios.create({
-    headers: {
-      authorization: Cookie.get('cookie') || '',
-    },
-    timeout: 10000,
+    timeout: 30000,
     withCredentials: false,
     ...config,
   });
 
   instance.interceptors.request.use(
     (config) => {
+      config.headers['authorization'] = Cookies.get('app_token') ? `Bearer ${Cookies.get('app_token')}` : ''
       return config;
     },
     (error) => {
@@ -22,13 +20,13 @@ const createAxiosByinterceptors = (config) => {
 
   instance.interceptors.response.use(
     (response) => {
-      const { statusCode, data, msg } = response.data;
-      if (statusCode == 401) console.log('token expired');
-      else {
-        return data;
-      }
+      return response.data;
     },
     (error) => {
+      console.log(error.response)
+      if(error.response.status === 401) {
+        console.log('Token Expired! Please Login')
+      }
       return Promise.reject(error);
     }
   );

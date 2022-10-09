@@ -9,6 +9,7 @@ import TicTacToe from './page/ticTacToe'
 import Home from "./page/home";
 import Calendar from "./page/calendar";
 import Website from "./page/websites";
+import NotFound from "./page/404";
 
 export default function App() {
   useEffect(() => {
@@ -46,7 +47,7 @@ export default function App() {
             <Route path="github-user-search" element={<GithubUserSearch />} />
             <Route path="password-generator" element={<PasswordGenerator />} />
             <Route path="website" element={<Website />} />
-            <Route path="*" element={<Home />}/>
+            <Route path="*" element={<NotFound />}/>
           </Routes>
         </div>
       </BrowserRouter>
