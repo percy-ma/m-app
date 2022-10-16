@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Error, HandleRound } from '@icon-park/react';
-import { Select, Option } from '../../components'
+import { Select, Option, message } from '../../components'
 import './index.scss';
 
 export default function TicTacToe() {
@@ -41,7 +41,7 @@ export default function TicTacToe() {
     let win = getWinner();
     if (win) {
       setWinner(win);
-      console.log('win: ', win);
+      message.success(`Winner: ${win}`)
     } else {
       if (notWinFun) {
         notWinFun();

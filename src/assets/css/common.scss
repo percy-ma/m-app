@@ -33,32 +33,31 @@ button.primary-btn:hover, input[type=submit]:hover {
 }
 
 
-
 /* rc-slide */
 .rc-slider {
   position: relative;
   width: 100%;
   height: 14px;
   padding: 5px 0;
-}
-.rc-slider-rail {
-  position: absolute;
-  width: 100%;
-  height: 4px;
-  background: var(--gray);
-}
-.rc-slider-track {
-  position: absolute;
-  height: 4px;
-  background: var(--gray-dark);
-}
-.rc-slider-handle {
-  position: absolute;
-  width: 14px;
-  height: 14px;
-  margin-top: -5px;
-  background: var(--white);
-  border-radius: 50%;
-  cursor: grab;
-  border: 2px solid var(--border);
+  &-rail {
+    position: absolute;
+    width: 100%;
+    height: 4px;
+    background: var(--gray);
+  }
+  &-track {
+    position: absolute;
+    height: 4px;
+    background: var(--gray-dark);
+  }
+  &-handle {
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    margin-top: -5px;
+    background: var(--white);
+    border-radius: 50%;
+    cursor: grab;
+    border: 2px solid var(--border);
+  }
 }

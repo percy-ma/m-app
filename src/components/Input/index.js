@@ -3,7 +3,15 @@ import PropTypes from 'prop-types';
 import { useState } from 'react';
 
 export default function App_Input(props) {
-  const { name, value, label, placeholder, onChange, onBlur, onSubmit } = props;
+  const {
+    name,
+    value,
+    label,
+    placeholder,
+    onChange,
+    onFocus,
+    onBlur,
+  } = props;
 
   const [val, setVal] = useState(value);
 
@@ -13,31 +21,23 @@ export default function App_Input(props) {
       setVal(e.target.value);
     }
   };
+  const handleFocus = () => {
+    onFocus && onFocus();
+  };
   const handleBlur = () => {
     onBlur && onBlur();
-  };
-  const handleSubmit = (e) => {
-    if(onSubmit) {
-      e.preventDefault();
-      onSubmit()
-    }
   };
 
   return (
     <div className="app-input">
       {label && <label htmlFor={name}>{label}</label>}
-      {props.type !== 'submit' ? (
-        <input
-          type="text"
-          name={name}
-          placeholder={placeholder}
-          value={val}
-          onChange={handleChange}
-          onBlur={handleBlur}
-        />
-      ) : (
-        <input type="submit" value={value} onClick={handleSubmit} />
-      )}
+      <input
+        type="text"
+        placeholder={placeholder}
+        onFocus={handleFocus}
+        onChange={handleChange}
+        onBlur={handleBlur}
+      />
     </div>
   );
 }
@@ -49,6 +49,6 @@ App_Input.propTypes = {
   placeholder: PropTypes.string,
   value: PropTypes.string,
   onChange: PropTypes.func,
+  onFocus: PropTypes.func,
   onBlur: PropTypes.func,
-  onSubmit: PropTypes.func,
 };

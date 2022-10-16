@@ -44,7 +44,7 @@ export function Select(props) {
   return (
     <div className="app-select" ref={(node) => setCell(node)}>
       <div
-        className="select-value"
+        className={optionShow ? "select-value options-show" : "select-value"}
         data-val={selectValue}
         onClick={toggleOptionShow}
       >

@@ -14,3 +14,12 @@
     }
   }
 }
+
+.is-invalid {
+  .app-input input {
+    border: 2px solid var(--red);
+    &:focus {
+      border: 2px solid var(--red-dark);
+    }
+  }
+}

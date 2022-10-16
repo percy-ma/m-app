@@ -1,19 +1,25 @@
-import { useEffect } from "react";
-import { BrowserRouter, Routes, Route, NavLink } from "react-router-dom";
+import { useEffect } from 'react';
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  NavLink,
+  Navigate,
+} from 'react-router-dom';
 
-import Login from './page/login'
-import Todo from './page/todo'
-import GithubUserSearch from "./page/githubUserSearch";
-import PasswordGenerator from "./page/passwordGenerator";
-import TicTacToe from './page/ticTacToe'
-import Home from "./page/home";
-import Calendar from "./page/calendar";
-import Website from "./page/websites";
-import NotFound from "./page/404";
+import User from './page/user';
+import Todo from './page/todo';
+import GithubUserSearch from './page/githubUserSearch';
+import PasswordGenerator from './page/passwordGenerator';
+import TicTacToe from './page/ticTacToe';
+import Home from './page/home';
+import Calendar from './page/calendar';
+import Website from './page/websites';
+import NotFound from './page/404';
 
 export default function App() {
   useEffect(() => {
-    document.title = "APP";
+    document.title = 'APP';
 
     return () => {};
   });
@@ -22,8 +28,8 @@ export default function App() {
     <div className="app">
       <BrowserRouter>
         <div className="nav-bar">
-          <NavLink to="/">Home</NavLink>
-          <NavLink to="login">Login</NavLink>
+          <NavLink to="home">Home</NavLink>
+          <NavLink to="user">User</NavLink>
           <div className="group-title">
             <span>APP</span>
           </div>
@@ -39,15 +45,16 @@ export default function App() {
         </div>
         <div className="main-content">
           <Routes>
-            <Route index element={<Home />}/>
-            <Route path="login" element={<Login />}/>
-            <Route path="todo" element={<Todo />}/>
+            <Route path="/" element={<Navigate to="home" />} />
+            <Route path="home" element={<Home />} />
+            <Route path="user" element={<User />} />
+            <Route path="todo" element={<Todo />} />
             <Route path="calendar" element={<Calendar />} />
             <Route path="tic-tac-toe" element={<TicTacToe />} />
             <Route path="github-user-search" element={<GithubUserSearch />} />
             <Route path="password-generator" element={<PasswordGenerator />} />
             <Route path="website" element={<Website />} />
-            <Route path="*" element={<NotFound />}/>
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </div>
       </BrowserRouter>

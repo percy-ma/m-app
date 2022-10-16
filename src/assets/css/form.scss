@@ -1,0 +1,40 @@
+input {
+    padding: 5px 8px;
+    border: 2px solid var(--border);
+    outline: none;
+
+    &:focus {
+        border: 2px solid var(--border-hover);
+    }
+}
+
+form {
+    .form-field {
+        position: relative;
+        margin: 20px 0;
+        display: flex;
+        flex-direction: column;
+
+        &.error {
+            input {
+                border-color: var(--red);
+            }
+
+        }
+
+        label {
+            font-weight: 700;
+        }
+
+        .err-msg {
+            color: var(--red-dark);
+            position: absolute;
+            top: 100%;
+            font-weight: 700;
+        }
+    }
+
+    input[type=submit] {
+        width: 100%;
+    }
+}

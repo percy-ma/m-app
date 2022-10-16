@@ -1,13 +1,12 @@
 import Input from './Input'
 import Avatar from './Avatar'
 import { Select, Option } from './Select'
-import { Form, FormItemContext as FormItem } from './Form'
+import message from './Message'
 
 export {
     Input,
     Avatar,
     Select,
     Option,
-    Form,
-    FormItem
+    message
 }

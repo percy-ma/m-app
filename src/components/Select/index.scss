@@ -6,6 +6,30 @@
     height: 20px;
     border: 1px solid var(--border);
     cursor: pointer;
+    position: relative;
+    &::before, &::after {
+      content: "";
+      display: block;
+      width: 8px;
+      height: 1px;
+      background-color: var(--gray);
+      position: absolute;
+      top: 50%;
+      right: 21px;
+      transition: transform .25s linear;
+    }
+    &:before {
+      transform: translateX(-3px) rotate(40deg);
+    }
+    &::after {
+      transform: translateX(3px) rotate(-40deg);
+    }
+    &.options-show::before {
+      transform: translateX(-3px) rotate(-40deg);
+    }
+    &.options-show::after {
+      transform: translateX(3px) rotate(40deg);
+    }
   }
   .select-placeholder {
     color: var(--gray-dark);
