@@ -84,6 +84,9 @@ export default function Calendar() {
     setMonth(new Date().getMonth() + 1);
     setSelectDate(new Date());
   };
+  const setDate = (date) => {
+    setSelectDate(new Date(date))
+  }
 
   return (
     <div className="calendar">
@@ -112,6 +115,7 @@ export default function Calendar() {
                       }
                       data-date={dayItem.date}
                       key={dayItem.date}
+                      onClick={()=>setDate(dayItem.date)}
                     >
                       {dayItem.day}
                     </div>
@@ -122,6 +126,7 @@ export default function Calendar() {
           })}
         </div>
       </div>
+      <div id='select-date'>{dayjs(selectDate).format('YYYY MMM DD')}</div>
     </div>
   );
 }

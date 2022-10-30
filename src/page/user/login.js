@@ -22,9 +22,9 @@ export default function Login() {
           message.success('Login Successfully!!!');
           console.log('login success', res);
           let token_expire = new Date(
-            new Date() * 1 + res.tokenInfo.expire_in * 1000
+            new Date() * 1 + res.data.tokenInfo.expire_in * 1000
           );
-          Cookie.set('app_token', res.tokenInfo.token, {
+          Cookie.set('app_token', res.data.tokenInfo.token, {
             expires: token_expire,
           });
         }
