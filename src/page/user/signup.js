@@ -1,16 +1,7 @@
-import { useForm } from 'react-hook-form';
-import Cookie from 'js-cookie';
 import request from '../../api/request';
-import { message } from '../../components'
+import { Form, Input, message } from '../../components';
 
 export default function Signup() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    mode: 'onBlur',
-  });
   const signUpSubmit = (data) => {
     request
       .post('/user/signup', {
@@ -20,74 +11,63 @@ export default function Signup() {
         email: data.email,
       })
       .then((res) => {
-        message.success('Sign Up Successfully!!!')
+        message.success('Sign Up Successfully!!!');
         console.log('success', res);
       })
       .catch((err) => {
-        message.error('Sign Up Failed!!!')
+        message.error('Sign Up Failed!!!');
         console.log('error', err);
       });
   };
   return (
     <>
       <h3 className="title">Sign Up</h3>
-      <form onSubmit={handleSubmit(signUpSubmit)}>
+      <Form onFinish={signUpSubmit} submitBtn="Sign Up">
         {/* First Name */}
-        <div className={!errors.firstname ? 'form-field' : 'form-field error'}>
-          <label htmlFor="firstname">First Name</label>
-          <input
-            {...register('firstname', {
-              required: true,
-            })}
-          />
-          {errors.firstname?.type === 'required' && (
-            <span className="err-msg">Please enter your first name!</span>
-          )}
-        </div>
-
+        <Form.Item
+          name="firstname"
+          label="First Name"
+          rules={[{ required: true, message: 'Please enter your first name!!' }]}
+        >
+          <Input />
+        </Form.Item>
         {/* Last Name */}
-        <div className={!errors.lastname ? 'form-field' : 'form-field error'}>
-          <label htmlFor="lastname">Last Name</label>
-          <input {...register('lastname', { required: true })} />
-          {errors.lastname?.type === 'required' && (
-            <span className="err-msg">Please enter your last name!</span>
-          )}
-        </div>
-
+        <Form.Item
+          name="lastname"
+          label="Last Name"
+          rules={[{ required: true, message: 'Please enter your last name!!' }]}
+        >
+          <Input />
+        </Form.Item>
         {/* Email */}
-        <div className={!errors.email ? 'form-field' : 'form-field error'}>
-          <label htmlFor="email">Email</label>
-          <input
-            {...register('email', {
-              required: true,
-              pattern: /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/,
-            })}
-          />
-          {errors.email?.type === 'required' && (
-            <span className="err-msg">Please enter your email address!</span>
-          )}
-          {errors.email?.type === 'pattern' && (
-            <span className="err-msg">Email invalid!</span>
-          )}
-        </div>
-
+        <Form.Item
+          name="email"
+          label="Email"
+          rules={[{
+            required: true,
+            message: 'Please enter your email address!'
+          }, {
+            type: 'email',
+            message: 'Email invalid!'
+          }]}
+        >
+          <Input />
+        </Form.Item>
         {/* Password */}
-        <div className={!errors.password ? 'form-field' : 'form-field error'}>
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            {...register('password', { required: true, minLength: 6 })}
-          />
-          {errors.password?.type === 'required' && (
-            <span className="err-msg">Please enter your password!</span>
-          )}
-          {errors.password?.type === 'minLength' && (
-            <span className="err-msg">At least 6 character!</span>
-          )}
-        </div>
-
-        <input type="submit" value="Sign Up" />
-      </form>
+        <Form.Item
+          name="password"
+          label="Password"
+          rules={[{
+            required: true,
+            message: 'Please enter your pasword!!'
+          }, {
+            min: 6,
+            message: 'At least 6 character!'
+          }]}
+        >
+          <Input />
+        </Form.Item>
+      </Form>
     </>
   );
 }

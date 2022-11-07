@@ -1,16 +1,11 @@
-import { useState, useEffect } from 'react';
-import { message } from '../../components';
-import { Form, Input, Radio } from 'antd';
+import { useState } from 'react';
+import { Form, Input, message, Select } from '../../components';
+// import Select, {Option} from 'rc-select';
 import request from '../../api/request';
 import './index.scss';
 
 export default function Todo() {
-  const [priority, setPriority] = useState(1);
   const [todoList, setTodoList] = useState([]);
-
-  const changePriority = (e) => {
-    setPriority(e.target.value);
-  };
 
   const addTodo = (values) => {
     console.log(values);
@@ -29,16 +24,16 @@ export default function Todo() {
 
   const getTodoList = () => {
     request.get('/todo/getTodoList').then((res) => {
-      let data = res.data
-      let list = []
-      for(let i=0; i<data.length; i++) {
+      let data = res.data;
+      let list = [];
+      for (let i = 0; i < data.length; i++) {
         list.push({
           id: data[i].id,
           title: data[i].title,
           description: data[i].description,
           priority: data[i].priority,
-          done: data[i].done
-        })
+          done: data[i].done,
+        });
       }
       setTodoList([...list]);
     });
@@ -51,11 +46,26 @@ export default function Todo() {
         id: todoItem.id,
         done: setDone,
       })
-      .then(res => {
-        if(res.code === 200) {
-          let tempTodoList = todoList
-          tempTodoList[index].done = setDone
-          setTodoList([...tempTodoList])
+      .then((res) => {
+        if (res.code === 200) {
+          let tempTodoList = todoList;
+          tempTodoList[index].done = setDone;
+          setTodoList([...tempTodoList]);
+        }
+      });
+  };
+
+  const deleteTodoItem = (itemId, index) => {
+    request
+      .post('/todo/deleteTodo', {
+        id: itemId,
+      })
+      .then((res) => {
+        if (res.code === 200) {
+          message.success('Delete Success!!');
+          let tempTodoList = todoList;
+          tempTodoList.splice(index, 1);
+          setTodoList([...tempTodoList]);
         }
       });
   };
@@ -65,30 +75,31 @@ export default function Todo() {
       <h3 className="title">Todo</h3>
       <div className="todo-container">
         <div id="add-box" className="card">
-          <Form onFinish={addTodo} initialValues={{ priority: 1 }}>
+          <Form onFinish={addTodo}>
             <Form.Item name="title" label="Title">
               <Input />
             </Form.Item>
             <Form.Item name="description" label="Description">
-              <Input.TextArea rows={4} />
+              <Input />
             </Form.Item>
             <Form.Item name="priority" label="Priority">
-              <Radio.Group value={priority} onChange={changePriority}>
-                <Radio value={1}>Low</Radio>
-                <Radio value={2}>Medium</Radio>
-                <Radio value={3}>High</Radio>
-              </Radio.Group>
+              <Select
+                options={[
+                  { value: 1, text: 'Low' },
+                  { value: 2, text: 'Medium' },
+                  { value: 3, text: 'High' },
+                ]}
+              />
             </Form.Item>
-            <button className="primary-btn" type="submit">
-              Submit
-            </button>
           </Form>
           <button className="primary-btn" onClick={getTodoList}>
             Get List
           </button>
         </div>
         <div id="list-box" className="card">
-          <div className="card-title">Todo List</div>
+          <div className="card-title">
+            Todo List<button onClick={getTodoList}>Refresh</button>
+          </div>
           {todoList.map((item, index) => {
             return (
               <div className="todo-list-item" key={item.id}>
@@ -112,6 +123,12 @@ export default function Todo() {
                     <div className="priority priority-high">HIGH</div>
                   )}
                 </div>
+                <button
+                  className="delete-btn"
+                  onClick={() => deleteTodoItem(item.id, index)}
+                >
+                  Delete
+                </button>
               </div>
             );
           })}

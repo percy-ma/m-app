@@ -1,48 +1,65 @@
 .app-select {
   position: relative;
-  .select-value {
-    display: block;
-    width: 100px;
-    height: 20px;
-    border: 1px solid var(--border);
-    cursor: pointer;
-    position: relative;
-    &::before, &::after {
-      content: "";
-      display: block;
-      width: 8px;
-      height: 1px;
-      background-color: var(--gray);
+  padding: 8px 8px;
+  border: 2px solid var(--border);
+  background-color: var(--white);
+  cursor: pointer;
+  user-select: none;
+  &:focus {
+    border: 2px solid var(--border-hover);
+  }
+  .app-select-input {
+    user-select: none;
+    &::before,
+    &::after {
       position: absolute;
-      top: 50%;
-      right: 21px;
-      transition: transform .25s linear;
-    }
-    &:before {
-      transform: translateX(-3px) rotate(40deg);
+      right: 15px;
+      content: '';
+      display: block;
+      width: 2.5px;
+      height: 7px;
+      background: #757573;
+      transform: rotate(50deg);
+      top: 15px;
+      transition: all 0.25s ease;
     }
     &::after {
-      transform: translateX(3px) rotate(-40deg);
+      transform: rotate(130deg);
+      right: 19px;
     }
-    &.options-show::before {
-      transform: translateX(-3px) rotate(-40deg);
+    &.active {
+      &::before {
+        transform: rotate(130deg);
+      }
+      &::after {
+        transform: rotate(50deg);
+      }
     }
-    &.options-show::after {
-      transform: translateX(3px) rotate(40deg);
-    }
-  }
-  .select-placeholder {
-    color: var(--gray-dark);
   }
   .app-options {
+    transform: scaleY(0);
+    transform-origin: 50% 0;
     position: absolute;
+    left: -2px;
+    top: 100%;
+    width: calc(100% + 2 * 2px);
+    padding: 8px 8px;
+    cursor: pointer;
     background-color: var(--white);
-    width: 100%;
+    border: 2px solid var(--border);
+    transition: transform 0.25s ease-in-out;
+    z-index: 1;
+    &.active {
+      transform: scaleY(1);
+    }
     .app-option {
-      cursor: pointer;
-      border: 1px solid var(--border);
+      padding: 3px 10px;
+      user-select: none;
+      transition: all 0.15s ease-in-out;
+      &:hover {
+        background-color: var(--gray-light);
+        font-weight: 700;
+      }
     }
   }
 }
-
-

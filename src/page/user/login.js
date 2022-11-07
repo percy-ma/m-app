@@ -1,17 +1,10 @@
-import { useForm } from 'react-hook-form';
 import Cookie from 'js-cookie';
 import request from '../../api/request';
-import { message } from '../../components';
+import { Form, Input, message } from '../../components';
 
 export default function Login() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    mode: 'onBlur',
-  });
   const loginSubmit = (data) => {
+    console.log(data);
     request
       .post('/user/login', {
         password: data.password,
@@ -37,37 +30,33 @@ export default function Login() {
   return (
     <>
       <h3 className="title">Login</h3>
-      <form onSubmit={handleSubmit(loginSubmit)}>
-        <div className={!errors.email ? 'form-field' : 'form-field error'}>
-          {/* Email */}
-          <label htmlFor="email">Email</label>
-          <input
-            {...register('email', {
-              required: true,
-              pattern: /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/,
-            })}
-          />
-          {errors.email?.type === 'required' && (
-            <span className="err-msg">Please enter your email address!</span>
-          )}
-          {errors.email?.type === 'pattern' && (
-            <span className="err-msg">Email invalid</span>
-          )}
-        </div>
-
+      <Form onFinish={loginSubmit} submitBtn='Login'>
+        {/* Email */}
+        <Form.Item
+          name="email"
+          label="Email"
+          rules={[{
+            required: true,
+            message: 'Please enter your email address!'
+          }, {
+            type: 'email',
+            message: 'Email invalid!'
+          }]}
+        >
+          <Input />
+        </Form.Item>
         {/* Password */}
-        <div className={!errors.password ? 'form-field' : 'form-field error'}>
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            {...register('password', { required: true })}
-          />
-          {errors.password?.type === 'required' && (
-            <span className="err-msg">Please enter your password!</span>
-          )}
-        </div>
-        <input type="submit" value="Login" />
-      </form>
+        <Form.Item
+          name="password"
+          label="Password"
+          rules={[{
+            required: true,
+            message: 'Please enter your password!'
+          }]}
+        >
+          <Input />
+        </Form.Item>
+      </Form>
     </>
   );
 }

@@ -1,15 +1,16 @@
 #time {
-    display: flex;
-    .time-block {
-        margin: 10px;
-        padding: 14px;
-        display: block;
-        width: 64px;
-        height: 64px;
-        text-align: center;
-        line-height: 36px;
-        box-shadow: 0 5px 8px -3px var(--gray-dark);
-        font-size: 24px;
-        cursor: default;
-    }
+  display: flex;
+  .time-block {
+    margin: 10px;
+    padding: 14px;
+    display: block;
+    width: 64px;
+    height: 64px;
+    text-align: center;
+    line-height: 36px;
+    box-shadow: 0 5px 8px -3px var(--gray-dark);
+    font-size: 24px;
+    cursor: default;
+    background-color: var(--white);
+  }
 }

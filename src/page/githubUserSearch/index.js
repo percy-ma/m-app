@@ -11,6 +11,10 @@ export default function GithubUserSearch() {
   const [hasProfile, setHasProfile] = useState(false);
   const [notfound, setNotfound] = useState(false);
 
+  const usernameHandler = (e) => {
+    setUsername(e.target.value)
+  }
+
   const searchUser = () => {
     setNotfound(false);
     if (username !== '') {
@@ -36,7 +40,7 @@ export default function GithubUserSearch() {
         <Input
           placeholder="Search Github username"
           value={username}
-          onChange={setUsername}
+          onChange={usernameHandler}
         />
         <button className='primary-btn' id="search-btn" onClick={searchUser}>
           Search

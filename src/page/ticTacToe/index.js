@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Error, HandleRound } from '@icon-park/react';
-import { Radio } from 'antd'
-import { Select, Option, message } from '../../components'
+import { message, Radio } from '../../components'
 import './index.scss';
 
 export default function TicTacToe() {
@@ -21,8 +20,8 @@ export default function TicTacToe() {
     [2, 4, 6],
   ];
 
-  const changeMode = (e) => {
-    setMode(e.target.value);
+  const changeMode = (val) => {
+    setMode(val);
     clearBoard();
   };
   const getWinner = () => {
@@ -96,8 +95,8 @@ export default function TicTacToe() {
       <h3 className="title">Tic Tac Toe</h3>
       <div id="mode-select">
         <div>Mode</div>
-        <Radio.Group value={mode} defaultValue={'single'} onChange={changeMode}>
-          <Radio value={'single'}>Single</Radio>
+        <Radio.Group value={mode} onChange={changeMode}>
+          <Radio value={'single'} defaultChecked>Single</Radio>
           <Radio value={'double'}>Double</Radio>
         </Radio.Group>
       </div>

@@ -1,79 +1,68 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import './index.scss';
 
-export function Select(props) {
-  const [selectValue, setSelectValue] = useState('');
-  const [selectText, setSelectText] = useState('');
+const AppSelect = (props) => {
+  const {
+    children,
+    name,
+    onChange,
+    onValidate,
+    options,
+    placeholder = 'Please Select',
+    ...rest
+  } = props;
   const [optionShow, setOptionShow] = useState(false);
-  const [cell, setCell] = useState('');
+  const [value, setValue] = useState('');
+  const [text, setText] = useState('');
 
-  const toggleOptionShow = () => {
+  const toggleOptions = () => {
     setOptionShow(!optionShow);
   };
 
-  const selectOption = (val, text) => {
-    props.onChange(val);
-    setSelectValue(val);
-    setSelectText(text);
+  const selectHandle = (option) => {
     setOptionShow(false);
+    onChange(option.value);
+    setValue(option.value);
+    setText(option.text);
+    onValidate && onValidate();
   };
 
-  useEffect(() => {
-    // set default option
-    React.Children.map(props.children, (child) => {
-      if (child.props.default) {
-        setSelectValue(child.props.value);
-        setSelectText(child.props.children);
-      }
-    });
-  }, []);
-
-  useEffect(() => {
-    // hide options if click outside selection
-    document.addEventListener(
-      'click',
-      (e) => {
-        if (cell && cell !== e.target && !cell.contains(e.target)) {
-          setOptionShow(false);
-        }
-      },
-      true
-    );
-  }, []);
-
   return (
-    <div className="app-select" ref={(node) => setCell(node)}>
+    <div className="app-select">
       <div
-        className={optionShow ? "select-value options-show" : "select-value"}
-        data-val={selectValue}
-        onClick={toggleOptionShow}
+        className={optionShow ? "app-select-input active" : "app-select-input"}
+        onClick={() => {
+          toggleOptions();
+        }}
+        {...rest}
       >
-        {selectText || (
-          <span className="select-placeholder">{props.placeholder || ''}</span>
+        {placeholder && value === '' && (
+          <span className="app-select-placeholder">{placeholder}</span>
         )}
+        {value && <span className="app-select-value">{text}</span>}
       </div>
       <div
-        className="app-options"
-        style={{ display: optionShow ? 'block' : 'none' }}
+        className={optionShow ? 'app-options active' : 'app-options'}
       >
-        {React.Children.map(props.children, (child, index) => {
-          return (
-            <div
-              key={index}
-              className="app-option"
-              onClick={() =>
-                selectOption(child.props.value, child.props.children)
-              }
-            >
-              {child}
-            </div>
-          );
-        })}
+        {options.map((option) => (
+          <div
+            className="app-option"
+            key={option.value}
+            value={option.value}
+            onClick={() => selectHandle(option)}
+          >
+            {option.text}
+          </div>
+        ))}
       </div>
     </div>
   );
-}
+};
 
-export function Option(props) {
-  return <>{props.children}</>;
-}
+AppSelect.propTypes = {
+  options: PropTypes.array,
+  placeholder: PropTypes.string,
+};
+
+export default AppSelect;

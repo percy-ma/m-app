@@ -1,22 +1,14 @@
-.app-input {
-  display: flex;
-  flex-direction: column;
-  // margin: 8px 0;
-  label {
-    margin-bottom: 3px;
-  }
-  input {
-    padding: 5px 8px;
-    border: 2px solid var(--border);
-    outline: none;
-    &:focus {
-      border: 2px solid var(--border-hover);
-    }
+input.app-input {
+  padding: 8px 8px;
+  border: 2px solid var(--border);
+  outline: none;
+  &:focus {
+    border: 2px solid var(--border-hover);
   }
 }
 
-.is-invalid {
-  .app-input input {
+.is-error {
+  input.app-input {
     border: 2px solid var(--red);
     &:focus {
       border: 2px solid var(--red-dark);
