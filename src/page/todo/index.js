@@ -1,6 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Form, Input, message, Select } from '../../components';
-// import Select, {Option} from 'rc-select';
 import request from '../../api/request';
 import './index.scss';
 

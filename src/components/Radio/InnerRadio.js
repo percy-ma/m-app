@@ -15,7 +15,7 @@ export default function Radio(props) {
         name={name}
         value={value}
         onChange={changeHandler}
-        defaultChecked={defaultChecked}
+        // defaultChecked={defaultChecked}
         className="app-radio"
       ></input>
       <span>{children}</span>

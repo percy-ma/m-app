@@ -1,0 +1,35 @@
+.modal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  &-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--gray);
+    opacity: 0.5;
+    z-index: 1000;
+  }
+
+  &-box {
+    width: 300px;
+    height: 200px;
+    background-color: var(--white);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10001;
+  }
+
+  &-close {
+    display: block;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+  }
+}

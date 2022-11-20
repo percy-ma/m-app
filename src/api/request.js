@@ -1,5 +1,6 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import { loading } from '../components';
 
 const createAxiosByinterceptors = (config) => {
   const instance = axios.create({
@@ -10,22 +11,28 @@ const createAxiosByinterceptors = (config) => {
 
   instance.interceptors.request.use(
     (config) => {
-      config.headers['authorization'] = Cookies.get('app_token') ? `Bearer ${Cookies.get('app_token')}` : ''
+      loading.show();
+      config.headers['authorization'] = Cookies.get('app_token')
+        ? `Bearer ${Cookies.get('app_token')}`
+        : '';
       return config;
     },
     (error) => {
+      loading.hide();
       return Promise.reject(error);
     }
   );
 
   instance.interceptors.response.use(
     (response) => {
+      loading.hide();
       return response.data;
     },
     (error) => {
-      console.log(error.response)
-      if(error.response.status === 401) {
-        console.log('Token Expired! Please Login')
+      loading.hide();
+      console.log(error.response);
+      if (error.response.status === 401) {
+        console.log('Token Expired! Please Login');
       }
       return Promise.reject(error);
     }

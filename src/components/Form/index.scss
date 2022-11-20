@@ -1,3 +1,9 @@
+.app-form {
+  .form-btn {
+    margin-top: 14px;
+    width: 100%;
+  }
+}
 .app-form-item {
   display: flex;
   flex-direction: column;
@@ -5,5 +11,9 @@
   label {
     font-weight: 700;
     margin-bottom: 3px;
+  }
+  .error-msg {
+    color: var(--red);
+    font-weight: 600;
   }
 }

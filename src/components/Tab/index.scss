@@ -1,0 +1,16 @@
+.tab-header {
+  display: flex;
+  justify-content: center;
+  margin: 8px;
+  font-size: 18px;
+  .tab-header-item {
+    padding: 3px;
+    margin: 5px;
+    cursor: pointer;
+    position: relative;
+    &.active {
+        border-bottom: 3px solid var(--gray-dark);
+    }
+    
+  }
+}

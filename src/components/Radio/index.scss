@@ -1,0 +1,14 @@
+.app-radio-group {
+  display: flex;
+  label {
+    display: flex;
+    margin-right: 10px;
+    cursor: pointer;
+    .app-radio {
+      margin-right: 3px;
+    }
+    span {
+      font-size: 16px;
+    }
+  }
+}

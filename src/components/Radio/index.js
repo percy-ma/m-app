@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import InnerRadio from './InnerRadio';
+import './index.scss'
 
 const Group = (props) => {
   const { children, name, onChange, onValidate, ...rest } = props;

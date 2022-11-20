@@ -30,7 +30,7 @@ const FormItem = React.forwardRef((props, ref) => {
 
   const child = React.Children.only(children);
   return (
-    <div className="app-form-item">
+    <div className={error ? 'app-form-item is-error' : 'app-form-item'}>
       {label && <label htmlFor={name}>{label}</label>}
       <Field name={name}>
         {React.cloneElement(child, {

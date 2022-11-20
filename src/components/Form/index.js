@@ -52,8 +52,8 @@ function AppForm(props) {
             })
           : child
       )}
-      <button onClick={submitForm}>{submitBtn}</button>
-      {hasResetBtn && <button onClick={resetForm}>{resetBtn}</button>}
+      <button type='submit' className='primary-btn form-btn' onClick={submitForm}>{submitBtn}</button>
+      {hasResetBtn && <button className='primary-btn form-btn' onClick={resetForm}>{resetBtn}</button>}
     </Form>
   );
 }

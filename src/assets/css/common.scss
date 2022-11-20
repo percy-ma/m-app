@@ -14,7 +14,7 @@
 h3.title {
   font-size: 22px;
   text-align: center;
-  margin: 20px;
+  margin: 14px;
   color: var(--gray-dark);
 }
 
@@ -30,15 +30,13 @@ h3.title {
   }
 }
 
-button.primary-btn,
-input[type='submit'] {
+button.primary-btn {
   background-color: var(--white);
   border: 2px solid var(--border);
   padding: 5px 10px;
 }
 
-button.primary-btn:hover,
-input[type='submit']:hover {
+button.primary-btn:hover {
   border-color: var(--border-hover);
 }
 
