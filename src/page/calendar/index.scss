@@ -5,24 +5,87 @@
   .header {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     margin-bottom: 10px;
+    width: 100%;
+    padding: 0 16px;
     &-text {
-      font-size: 18px;
-      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      span {
+        font-size: 18px;
+        font-weight: 700;
+        .month-select {
+          border: none;
+          padding: 3px 7px;
+          height: auto;
+          border: 1px solid transparent;
+          &:hover,
+          &.month-select-active {
+            border: 1px solid var(--border);
+          }
+          &-options {
+            width: auto;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            margin-top: 6px;
+          }
+        }
+      }
+    }
+    &-month-btn {
+      display: flex;
     }
     .month-btn {
+      position: relative;
       cursor: pointer;
       margin-top: 2px;
+      width: 24px;
+      height: 24px;
+      border: 1px solid transparent;
+      transition: all 0.25s ease;
+      &:hover {
+        border: 1px solid var(--border);
+      }
+      &:nth-of-type(1),
+      &:nth-of-type(2) {
+        &::before,
+        &::after {
+          position: absolute;
+          right: 10px;
+          content: '';
+          display: block;
+          width: 2.5px;
+          height: 10px;
+          background: #757573;
+          transform: rotate(45deg);
+          top: 3px;
+        }
+        &::after {
+          transform: rotate(135deg);
+          top: 9px;
+        }
+      }
+      &:nth-of-type(2) {
+        &::before,
+        &::after {
+          transform: rotate(-45deg);
+        }
+        &::after {
+          transform: rotate(-135deg);
+        }
+      }
     }
   }
   .week {
     display: flex;
     .day {
       display: block;
-      width: 30px;
-      height: 30px;
+      width: 40px;
+      height: 40px;
       text-align: center;
-      line-height: 28px;
+      line-height: 38px;
       margin: 3px;
       border: 2px solid var(--white);
       cursor: pointer;

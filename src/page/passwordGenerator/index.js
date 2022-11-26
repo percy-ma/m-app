@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Slider from 'rc-slider';
 import './index.scss';
+import {Button} from '../../components'
 import { Copy } from '@icon-park/react';
 
 export default function PasswordGenerator() {
@@ -135,9 +136,9 @@ export default function PasswordGenerator() {
           ></span>
           <span>Include Symbols</span>
         </div>
-        <button id="generate-btn" onClick={generatePwd}>
+        <Button id="generate-btn" onClick={generatePwd}>
           Generate
-        </button>
+        </Button>
         </div>
       </div>
     </div>

@@ -1,13 +1,26 @@
 import { useState, useMemo } from 'react';
 import dayjs from 'dayjs';
-import { Left, Right } from '@icon-park/react';
+import { Select } from '../../components';
 import './index.scss';
 
 export default function Calendar() {
   const [year, setYear] = useState(new Date().getFullYear());
   const [month, setMonth] = useState(new Date().getMonth() + 1);
   const [selectDate, setSelectDate] = useState(new Date());
-  const MONTH_LIST = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'Septempter', 'October', 'November', 'December']
+  const MONTH_LIST = [
+    { value: 1, text: 'January', default: month === 1 },
+    { value: 2, text: 'February', default: month === 2 },
+    { value: 3, text: 'March', default: month === 3 },
+    { value: 4, text: 'April', default: month === 4 },
+    { value: 5, text: 'May', default: month === 5 },
+    { value: 6, text: 'June', default: month === 6 },
+    { value: 7, text: 'July', default: month === 7 },
+    { value: 8, text: 'August', default: month === 8 },
+    { value: 9, text: 'Septempter', default: month === 9 },
+    { value: 10, text: 'October', default: month === 10 },
+    { value: 11, text: 'November', default: month === 11 },
+    { value: 12, text: 'December', default: month === 12 },
+  ];
 
   const initCalendar = useMemo(() => {
     let startDay = new Date([year, month, 1].join('/'));
@@ -51,7 +64,6 @@ export default function Calendar() {
     for (let i = 0; i < month_weeks_num; i++) {
       tempDateArr.push(dayArr.splice(0, 7));
     }
-    console.log(year, month, tempDateArr);
     return tempDateArr;
   }, [year, month, selectDate]);
 
@@ -85,21 +97,33 @@ export default function Calendar() {
     setSelectDate(new Date());
   };
   const setDate = (date) => {
-    setSelectDate(new Date(date))
-  }
+    setSelectDate(new Date(date));
+  };
+  const selectMonth = (month) => {
+    setMonth(month);
+  };
 
   return (
     <div className="calendar">
       <div className="card">
         <div className="header">
-          <div className="month-btn" onClick={lastMonth}>
-            <Left theme="outline" size="18" fill="#333" />
+          <div className="header-text">
+            <span>{year}</span>
+            <span>
+              <Select
+                options={MONTH_LIST}
+                selectValue={month}
+                onChange={selectMonth}
+                selectClassName="month-select"
+                selectActiveClassName="month-select-active"
+                optionsClassName="month-select-options"
+                showArrow={false}
+              />
+            </span>
           </div>
-          <div className='header-text'>
-            {year} {MONTH_LIST[month-1]}
-          </div>
-          <div className="month-btn" onClick={nextMonth}>
-            <Right theme="outline" size="18" fill="#333" />
+          <div className="header-month-btn">
+            <div className="month-btn" onClick={lastMonth}></div>
+            <div className="month-btn" onClick={nextMonth}></div>
           </div>
         </div>
         {/* <button onClick={toToday}>Today</button> */}
@@ -115,7 +139,7 @@ export default function Calendar() {
                       }
                       data-date={dayItem.date}
                       key={dayItem.date}
-                      onClick={()=>setDate(dayItem.date)}
+                      onClick={() => setDate(dayItem.date)}
                     >
                       {dayItem.day}
                     </div>
@@ -126,7 +150,7 @@ export default function Calendar() {
           })}
         </div>
       </div>
-      <div id='select-date'>{dayjs(selectDate).format('YYYY MMM DD')}</div>
+      <div id="select-date">{dayjs(selectDate).format('YYYY MMM DD')}</div>
     </div>
   );
 }

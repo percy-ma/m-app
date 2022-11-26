@@ -19,7 +19,6 @@ export function MessageContainer() {
   };
 
   add = (notice) => {
-    console.log(notices, notice);
     setNotices((prevNotices) => [...prevNotices, notice]);
 
     setTimeout(() => {

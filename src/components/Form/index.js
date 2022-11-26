@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import Form from 'rc-field-form';
+import React, { useState, useEffect, useImperativeHandle } from 'react';
+import RcForm from 'rc-field-form';
 import PropTypes from 'prop-types';
 import AppFormItem from './FormItem';
+import { Button } from '../index'
 import './index.scss';
 
-function AppForm(props) {
+function AppForm(props, ref) {
   const {
     children,
     onFinish,
@@ -12,8 +13,15 @@ function AppForm(props) {
     hasResetBtn = false,
     resetBtn = 'Reset',
   } = props;
-  const [form] = Form.useForm();
+  const [rcform] = RcForm.useForm();
   const [refArr, setRefArr] = useState([]);
+
+  useImperativeHandle(
+    ref,
+    () => ({
+      resetForm
+    })
+  )
 
   useEffect(() => {
     const temp_refArr = [];
@@ -31,41 +39,43 @@ function AppForm(props) {
       !fieldValid && (validateSuccess = fieldValid)
     }
     if(validateSuccess) {
-      form.submit()
+      rcform.submit()
     }
   };
   const resetForm = () => {
-    form.resetFields();
+    rcform.resetFields();
   };
 
   return (
-    <Form
-      form={form}
+    <RcForm
+      form={rcform}
       className="app-form"
       onFinish={onFinish}
     >
       {React.Children.map(children, (child, index) =>
         child.props.name
           ? React.cloneElement(child, {
-              form,
+              form: rcform,
               ref: refArr[index],
             })
           : child
       )}
-      <button type='submit' className='primary-btn form-btn' onClick={submitForm}>{submitBtn}</button>
+      <Button type='submit' className='form-btn' onClick={submitForm}>{submitBtn}</Button>
       {hasResetBtn && <button className='primary-btn form-btn' onClick={resetForm}>{resetBtn}</button>}
-    </Form>
+    </RcForm>
   );
 }
 
-AppForm.Item = AppFormItem;
+const Form = React.forwardRef(AppForm)
 
-export default AppForm;
+Form.Item = AppFormItem;
 
-AppForm.propTypes = {
+export default Form;
+
+Form.propTypes = {
   submitBtn: PropTypes.string,
   resetBtn: PropTypes.string,
   hasResetBtn: PropTypes.bool,
   onFinish: PropTypes.func,
-  onFinishFailed: PropTypes.func,
+  onFinishFailed: PropTypes.func
 };

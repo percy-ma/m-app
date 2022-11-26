@@ -7,5 +7,19 @@ import Radio from './Radio';
 import Tab from './Tab';
 import loading from './Loading';
 import Modal from './Modal';
+import Button from './Button';
+import Switch from './Switch'
 
-export { Input, Avatar, Select, message, Form, Radio, Tab, loading, Modal };
+export {
+  Input,
+  Avatar,
+  Select,
+  message,
+  Form,
+  Radio,
+  Tab,
+  loading,
+  Modal,
+  Button,
+  Switch
+};

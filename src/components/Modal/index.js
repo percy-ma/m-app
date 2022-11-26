@@ -11,15 +11,16 @@ function Modal(props) {
     onCancel,
     okBtn,
     cancelBtn,
+    showExitBtn = true,
     portal = true,
   } = props;
 
   const ModalContent = () => {
     return (
       <div className="modal">
-        <div className="modal-overlay"></div>
+        {/* <div className="modal-overlay"></div> */}
         <div className="modal-box">
-          <div className="modal-close" onClick={onCancel}>x</div>
+          {showExitBtn && <div className="modal-close" onClick={onCancel}>x</div>}
           <div className="modal-content">{children}</div>
           <div className="modal-button">
             {okBtn && <button onClick={onOk}>{okBtn}</button>}
@@ -51,6 +52,7 @@ Modal.propTypes = {
   cancelBtn: PropTypes.string,
   onOk: PropTypes.func,
   onCancel: PropTypes.func,
+  showExitBtn: PropTypes.bool
 };
 
 export default Modal;

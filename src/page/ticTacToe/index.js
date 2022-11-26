@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Error, HandleRound } from '@icon-park/react';
-import { message, Radio } from '../../components'
+import { message, Radio, Button } from '../../components'
 import './index.scss';
 
 export default function TicTacToe() {
@@ -94,7 +94,6 @@ export default function TicTacToe() {
     <div className="tic-tac-toe content-middle">
       <h3 className="title">Tic Tac Toe</h3>
       <div id="mode-select">
-        <div>Mode</div>
         <Radio.Group value={mode} onChange={changeMode}>
           <Radio value={'single'} defaultChecked>Single</Radio>
           <Radio value={'double'}>Double</Radio>
@@ -112,7 +111,7 @@ export default function TicTacToe() {
           );
         })}
       </div>
-      <button onClick={clearBoard}>Clear</button>
+      <Button onClick={clearBoard}>Clear</Button>
       <div className="winner">Winner: {winner}</div>
     </div>
   );

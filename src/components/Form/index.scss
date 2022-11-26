@@ -1,19 +1,35 @@
 .app-form {
+  width: 100%;
   .form-btn {
     margin-top: 14px;
     width: 100%;
   }
 }
 .app-form-item {
+  position: relative;
   display: flex;
   flex-direction: column;
-  margin-bottom: 10px;
-  label {
-    font-weight: 700;
-    margin-bottom: 3px;
-  }
+  margin-bottom: 30px;
+  // label {
+  //   font-weight: 700;
+  //   margin-bottom: 3px;
+  // }
   .error-msg {
+    position: absolute;
+    top: 100%;
+    transform: scaleY(0);
+    transform-origin: 0% 0;
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.25s ease-in-out;
+    left: 12px;
     color: var(--red);
+    font-size: 12px;
     font-weight: 600;
+    &.show {
+      transform: scaleY(1);
+      visibility: visible;
+      opacity: 1;
+    }
   }
 }

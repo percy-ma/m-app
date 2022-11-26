@@ -1,30 +1,29 @@
-import { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom/client';
 import Modal from './index';
 
 const useModal = (content, okFun) => {
   const now = Date.now();
 
-  const hide = () => {
+  const hideModal = () => {
     document.body.removeChild(document.getElementById(`modal-wrapper-${now}`));
   };
   const onOk = () => {
     okFun && okFun()
   }
-  const show = () => {
+  const showModal = () => {
     let el = document.createElement('div');
     el.className = 'modal-wrapper';
     el.id = `modal-wrapper-${now}`;
     document.body.append(el);
     const root = ReactDOM.createRoot(el);
     root.render(
-      <Modal portal={false} visible={true} onOk={()=>onOk()} onCancel={()=>{hide()}}>
+      <Modal portal={false} visible={true} onOk={()=>onOk()} onCancel={()=>{hideModal()}}>
         {content}
       </Modal>
     );
   };
 
-  return { show, hide };
+  return { showModal, hideModal };
 };
 
 export default useModal;

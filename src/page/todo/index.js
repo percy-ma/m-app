@@ -1,16 +1,22 @@
-import { useState, useEffect } from 'react';
-import { Form, Input, message, Select } from '../../components';
+import { useState, useRef } from 'react';
+import { Button, Form, Input, message, Select } from '../../components';
 import request from '../../api/request';
 import './index.scss';
 
 export default function Todo() {
   const [todoList, setTodoList] = useState([]);
+  const ref = useRef();
+
+  const clearAddForm = () => {
+    ref.current.resetForm();
+  };
 
   const addTodo = (values) => {
     console.log(values);
     request
       .post('/todo/addTodo', values)
       .then((res) => {
+        clearAddForm();
         console.log(res.data);
         message.success('Add Success!!!');
         getTodoList();
@@ -22,20 +28,26 @@ export default function Todo() {
   };
 
   const getTodoList = () => {
-    request.get('/todo/getTodoList').then((res) => {
-      let data = res.data;
-      let list = [];
-      for (let i = 0; i < data.length; i++) {
-        list.push({
-          id: data[i].id,
-          title: data[i].title,
-          description: data[i].description,
-          priority: data[i].priority,
-          done: data[i].done,
-        });
-      }
-      setTodoList([...list]);
-    });
+    request
+      .get('/todo/getTodoList')
+      .then((res) => {
+        let data = res.data;
+        let list = [];
+        for (let i = 0; i < data.length; i++) {
+          list.push({
+            id: data[i].id,
+            title: data[i].title,
+            description: data[i].description,
+            priority: data[i].priority,
+            done: data[i].done,
+          });
+        }
+        setTodoList([...list]);
+      })
+      .catch((err) => {
+        message.error('Get List Error');
+        console.log(err);
+      });
   };
 
   const setTodoItemDone = (todoItem, setDone, index) => {
@@ -50,7 +62,13 @@ export default function Todo() {
           let tempTodoList = todoList;
           tempTodoList[index].done = setDone;
           setTodoList([...tempTodoList]);
+        } else {
+          message.error('Server Error');
         }
+      })
+      .catch((err) => {
+        message.error('Server Error');
+        console.log(err);
       });
   };
 
@@ -65,7 +83,13 @@ export default function Todo() {
           let tempTodoList = todoList;
           tempTodoList.splice(index, 1);
           setTodoList([...tempTodoList]);
+        } else {
+          message.error('Server Error');
         }
+      })
+      .catch((err) => {
+        message.error('Server Error');
+        console.log(err);
       });
   };
 
@@ -74,15 +98,32 @@ export default function Todo() {
       <h3 className="title">Todo</h3>
       <div className="todo-container">
         <div id="add-box" className="card">
-          <Form onFinish={addTodo}>
-            <Form.Item name="title" label="Title">
-              <Input />
+          <Form ref={ref} onFinish={addTodo}>
+            <Form.Item
+              name="title"
+              rules={[
+                {
+                  required: true,
+                  message: 'Please enter your title!',
+                },
+              ]}
+            >
+              <Input label="Title"/>
             </Form.Item>
-            <Form.Item name="description" label="Description">
-              <Input />
+            <Form.Item name="description" >
+              <Input label="Description"/>
             </Form.Item>
-            <Form.Item name="priority" label="Priority">
+            <Form.Item
+              name="priority"
+              rules={[
+                {
+                  required: true,
+                  message: 'Please choose priority!',
+                },
+              ]}
+            >
               <Select
+                label="Priority"
                 options={[
                   { value: 1, text: 'Low' },
                   { value: 2, text: 'Medium' },
@@ -91,13 +132,11 @@ export default function Todo() {
               />
             </Form.Item>
           </Form>
-          <button className="primary-btn" onClick={getTodoList}>
-            Get List
-          </button>
         </div>
         <div id="list-box" className="card">
           <div className="card-title">
-            Todo List<button onClick={getTodoList}>Refresh</button>
+            <span>Todo List</span>
+            <Button onClick={getTodoList}>Refresh</Button>
           </div>
           {todoList.map((item, index) => {
             return (
@@ -105,7 +144,9 @@ export default function Todo() {
                 <div
                   className="done-dot"
                   onClick={() => setTodoItemDone(item, !item.done, index)}
-                ></div>
+                >
+                  <span className='done-dot-inner'></span>
+                </div>
                 <div
                   className={
                     item.done ? 'item-content item-done' : 'item-content'
@@ -122,12 +163,12 @@ export default function Todo() {
                     <div className="priority priority-high">HIGH</div>
                   )}
                 </div>
-                <button
+                <Button
                   className="delete-btn"
                   onClick={() => deleteTodoItem(item.id, index)}
                 >
                   Delete
-                </button>
+                </Button>
               </div>
             );
           })}

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Schema from 'async-validator';
 
 const FormItem = React.forwardRef((props, ref) => {
-  const { children, name, label, rules, form } = props;
+  const { children, name, label, rules, className = '', form } = props;
 
   const [error, setError] = useState(null);
 
@@ -15,30 +15,32 @@ const FormItem = React.forwardRef((props, ref) => {
   });
 
   const validateField = async () => {
-    console.log(form.getFieldValue(name))
-    const validator = new Schema({ [name]: rules });
-    try {
-      await validator.validate({ [name]: form.getFieldValue(name) });
-      setError(null);
-    } catch (err) {
-      const { errors } = err;
-      setError(errors[0]);
-      return false;
+    if (rules) {
+      const validator = new Schema({ [name]: rules });
+      try {
+        await validator.validate({ [name]: form.getFieldValue(name) });
+        setError(null);
+      } catch (err) {
+        const { errors } = err;
+        setError(errors[0]);
+        return false;
+      }
     }
     return true;
   };
 
   const child = React.Children.only(children);
   return (
-    <div className={error ? 'app-form-item is-error' : 'app-form-item'}>
+    <div className={`app-form-item ${className} ${error ? 'is-error' : ''}`}>
       {label && <label htmlFor={name}>{label}</label>}
       <Field name={name}>
         {React.cloneElement(child, {
           name,
+          error,
           onValidate: validateField,
         })}
       </Field>
-      {error && <span className="error-msg">{error.message}</span>}
+      <span className={`error-msg ${error&&'show'}`}>{error && error.message}</span>
     </div>
   );
 });
@@ -46,6 +48,7 @@ const FormItem = React.forwardRef((props, ref) => {
 FormItem.propTypes = {
   name: PropTypes.string.isRequired,
   label: PropTypes.string,
+  className: PropTypes.string,
   rules: PropTypes.array,
 };
 

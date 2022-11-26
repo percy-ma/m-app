@@ -38,7 +38,7 @@ function Tab(props) {
   };
 
   return (
-    <div>
+    <>
       <div className="tab-header">
         {tabList.map((tab, index) => (
           <div
@@ -50,8 +50,8 @@ function Tab(props) {
           </div>
         ))}
       </div>
-      <div>{renderChildren}</div>
-    </div>
+      <>{renderChildren}</>
+    </>
   );
 }
 

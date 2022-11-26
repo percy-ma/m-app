@@ -1,0 +1,19 @@
+.app-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 18px;
+  background-color: var(--white);
+  border: 2px solid var(--border);
+  border-radius: 4px;
+  cursor: pointer;
+  &.primary-btn {
+    color: var(--white);
+    background-color: var(--primary);
+    border: none;
+  }
+
+//   &:hover {
+//     border-color: var(--border-hover);
+//   }
+}

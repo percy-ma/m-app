@@ -1,16 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import './index.scss';
 
 const AppSelect = (props) => {
   const {
-    children,
-    name,
+    label,
     onChange,
     onValidate,
+    error,
     options,
-    placeholder = 'Please Select',
-    ...rest
+    selectValue,
+    showArrow = true,
+    selectClassName = '',
+    selectActiveClassName = '',
+    optionsClassName = '',
   } = props;
   const [optionShow, setOptionShow] = useState(false);
   const [value, setValue] = useState('');
@@ -28,22 +31,46 @@ const AppSelect = (props) => {
     onValidate && onValidate();
   };
 
+  useEffect(() => {
+    onChange(selectValue);
+    setValue(selectValue);
+    for (let i = 0; i < options.length; i++) {
+      if (options[i].value === selectValue) {
+        setText(options[i].text);
+        break;
+      }
+    }
+  }, [selectValue])
+
+  useEffect(() => {
+    for (let i = 0; i < options.length; i++) {
+      if (options[i].default) {
+        onChange(options[i].value);
+        setValue(options[i].value);
+        setText(options[i].text);
+        break;
+      }
+    }
+  }, []);
+
   return (
-    <div className="app-select">
+    <div
+      className={`app-select ${error ? 'has-error' : ''} ${selectClassName} ${optionShow ? selectActiveClassName : ''}`}
+      onClick={() => {
+        toggleOptions();
+      }}
+    >
       <div
-        className={optionShow ? "app-select-input active" : "app-select-input"}
-        onClick={() => {
-          toggleOptions();
-        }}
-        {...rest}
+        className={`app-select-input ${optionShow ? 'active' : ''} ${
+          showArrow ? 'arrow-show' : ''
+        }`}
       >
-        {placeholder && value === '' && (
-          <span className="app-select-placeholder">{placeholder}</span>
-        )}
         {value && <span className="app-select-value">{text}</span>}
       </div>
       <div
-        className={optionShow ? 'app-options active' : 'app-options'}
+        className={`app-options ${
+          optionShow ? 'active' : ''
+        } ${optionsClassName}`}
       >
         {options.map((option) => (
           <div
@@ -56,13 +83,23 @@ const AppSelect = (props) => {
           </div>
         ))}
       </div>
+      {label && (
+        <label className={optionShow || value ? 'transform' : ''}>
+          {label}
+        </label>
+      )}
     </div>
   );
 };
 
 AppSelect.propTypes = {
+  label: PropTypes.string,
   options: PropTypes.array,
-  placeholder: PropTypes.string,
+  selectClassName: PropTypes.string,
+  selectActiveClassName: PropTypes.string,
+  optionsClassName: PropTypes.string,
+  showArrow: PropTypes.bool,
+  onChange: PropTypes.func,
 };
 
 export default AppSelect;

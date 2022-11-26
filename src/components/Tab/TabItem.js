@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 
 function TabItem({ children }) {
-  return <div>{children}</div>;
+  return <>{children}</>;
 }
 TabItem.displayName = 'tabItem';
 

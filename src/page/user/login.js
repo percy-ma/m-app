@@ -34,27 +34,26 @@ export default function Login() {
         {/* Email */}
         <Form.Item
           name="email"
-          label="Email"
+          // label="Email"
           rules={[{
             required: true,
-            message: 'Please enter your email address!'
+            message: 'Email required!!!'
           }, {
             type: 'email',
-            message: 'Email invalid!'
+            message: 'Email invalid!!!'
           }]}
         >
-          <Input />
+          <Input label='Email'/>
         </Form.Item>
         {/* Password */}
         <Form.Item
           name="password"
-          label="Password"
           rules={[{
             required: true,
-            message: 'Please enter your password!'
+            message: 'Password required!!!'
           }]}
         >
-          <Input />
+          <Input label="Password" type='password' />
         </Form.Item>
       </Form>
     </>

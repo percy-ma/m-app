@@ -3,7 +3,7 @@ import { useState } from 'react';
 import dayjs from 'dayjs';
 import { LinkThree, LocalTwo, City, Twitter } from '@icon-park/react';
 import './index.scss';
-import { Input } from '../../components';
+import { Input, Button } from '../../components';
 
 export default function GithubUserSearch() {
   const [username, setUsername] = useState('');
@@ -38,13 +38,13 @@ export default function GithubUserSearch() {
       <h3 className="title">Github User Search</h3>
       <div className="input-box">
         <Input
-          placeholder="Search Github username"
+          placeholder="Github Username"
           value={username}
           onChange={usernameHandler}
         />
-        <button className='primary-btn' id="search-btn" onClick={searchUser}>
+        <Button type='primary' id="search-btn" onClick={searchUser}>
           Search
-        </button>
+        </Button>
       </div>
       <div className={notfound ? 'notfound-box' : 'notfound-box d-none'}>
         User Not Found!

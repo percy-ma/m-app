@@ -1,3 +1,4 @@
+import React from 'react';
 import request from '../../api/request';
 import { Form, Input, message } from '../../components';
 
@@ -26,46 +27,52 @@ export default function Signup() {
         {/* First Name */}
         <Form.Item
           name="firstname"
-          label="First Name"
-          rules={[{ required: true, message: 'Please enter your first name!!' }]}
+          rules={[
+            { required: true, message: 'Firstname required!!' },
+          ]}
+          className="form-item-name"
         >
-          <Input />
+          <Input label="Firstname"/>
         </Form.Item>
         {/* Last Name */}
         <Form.Item
           name="lastname"
-          label="Last Name"
-          rules={[{ required: true, message: 'Please enter your last name!!' }]}
+          rules={[{ required: true, message: 'Lastname required!!' }]}
+          className="form-item-name"
         >
-          <Input />
+          <Input label="Lastname"/>
         </Form.Item>
         {/* Email */}
         <Form.Item
           name="email"
-          label="Email"
-          rules={[{
-            required: true,
-            message: 'Please enter your email address!'
-          }, {
-            type: 'email',
-            message: 'Email invalid!'
-          }]}
+          rules={[
+            {
+              required: true,
+              message: 'Email required!!',
+            },
+            {
+              type: 'email',
+              message: 'Email invalid!!',
+            },
+          ]}
         >
-          <Input />
+          <Input label="Email"/>
         </Form.Item>
         {/* Password */}
         <Form.Item
           name="password"
-          label="Password"
-          rules={[{
-            required: true,
-            message: 'Please enter your pasword!!'
-          }, {
-            min: 6,
-            message: 'At least 6 character!'
-          }]}
+          rules={[
+            {
+              required: true,
+              message: 'Password required!!',
+            },
+            {
+              min: 6,
+              message: 'At least 6 character!',
+            },
+          ]}
         >
-          <Input />
+          <Input type='password' label="Password"/>
         </Form.Item>
       </Form>
     </>

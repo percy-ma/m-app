@@ -1,17 +1,44 @@
-input.app-input {
-  padding: 8px 8px;
-  border: 2px solid var(--border);
-  outline: none;
-  &:focus {
-    border: 2px solid var(--border-hover);
+.app-input {
+  position: relative;
+  > input {
+    height: 46px;
+    width: 100%;
+    padding-left: 14px;
+    border: 2px solid var(--gray);
+    border-radius: 4px;
+    outline: none;
+    background: transparent;
+    color: var(--black);
+    font-size: 16px;
+    &.has-error {
+      border: 2px solid var(--red);
+      &:focus {
+        border: 2px solid var(--red-dark);
+        ~ label {
+          color: var(--red-dark);
+        }
+      }
+    }
   }
-}
+  > label {
+    position: absolute;
+    top: 50%;
+    translate: 0 -50%;
+    pointer-events: none;
+    color: var(--gray);
+    transition: 0.3s;
+    left: 10px;
+    padding: 4px 4px;
+  }
 
-.is-error {
-  input.app-input {
-    border: 2px solid var(--red);
-    &:focus {
-      border: 2px solid var(--red-dark);
+  > input:focus,
+  > input.has-value {
+    border-color: var(--border-focus);
+    ~ label {
+      background: var(--white);
+      color: var(--border-focus);
+      font-weight: 700;
+      translate: 0 -36px;
     }
   }
 }

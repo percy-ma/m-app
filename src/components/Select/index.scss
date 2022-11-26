@@ -1,33 +1,58 @@
 .app-select {
   position: relative;
-  padding: 8px 8px;
+  height: 46px;
+  padding-left: 14px;
   border: 2px solid var(--border);
-  background-color: var(--white);
+  background-color: transparent;
+  border-radius: 4px;
   cursor: pointer;
   user-select: none;
+  display: flex;
+  align-items: center;
+  &.has-error {
+    border: 2px solid var(--red);
+  }
   &:focus {
     border: 2px solid var(--border-hover);
   }
+  label {
+    position: absolute;
+    top: 50%;
+    translate: 0 -50%;
+    pointer-events: none;
+    color: var(--gray);
+    transition: 0.3s;
+    left: 10px;
+    padding: 4px 4px;
+    &.transform {
+      background: var(--white);
+      color: var(--border-focus);
+      font-weight: 700;
+      translate: 0 -36px;
+    }
+  }
   .app-select-input {
     user-select: none;
-    &::before,
-    &::after {
-      position: absolute;
-      right: 15px;
-      content: '';
-      display: block;
-      width: 2.5px;
-      height: 7px;
-      background: #757573;
-      transform: rotate(50deg);
-      top: 15px;
-      transition: all 0.25s ease;
+    &.arrow-show {
+      &::before,
+      &::after {
+        position: absolute;
+        right: 15px;
+        content: '';
+        display: block;
+        width: 2.5px;
+        height: 7px;
+        background: #757573;
+        transform: rotate(50deg);
+        top: 18px;
+        transition: all 0.25s ease;
+      }
+      &::after {
+        transform: rotate(130deg);
+        right: 19px;
+      }
     }
-    &::after {
-      transform: rotate(130deg);
-      right: 19px;
-    }
-    &.active {
+    &.active.arrow-show {
       &::before {
         transform: rotate(130deg);
       }
@@ -38,7 +63,7 @@
   }
   .app-options {
     transform: scaleY(0);
-    transform-origin: 50% 0;
+    transform-origin: 0% 0;
     position: absolute;
     left: -2px;
     top: 100%;
@@ -47,10 +72,14 @@
     cursor: pointer;
     background-color: var(--white);
     border: 2px solid var(--border);
-    transition: transform 0.25s ease-in-out;
+    transition: all 0.25s ease-in-out;
     z-index: 1;
+    visibility: hidden;
+    opacity: 0;
     &.active {
       transform: scaleY(1);
+      visibility: visible;
+      opacity: 1;
     }
     .app-option {
       padding: 3px 10px;
@@ -61,11 +90,5 @@
         font-weight: 700;
       }
     }
-  }
-}
-
-.is-error {
-  .app-select {
-    border: 2px solid var(--red);
   }
 }

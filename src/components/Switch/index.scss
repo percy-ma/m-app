@@ -1,0 +1,34 @@
+label.app-switch {
+  cursor: pointer;
+  input {
+    position: absolute;
+    transform: scale(0);
+    &:checked ~ {
+      .app-switch-box {
+        background: var(--gray-light);
+        .app-switch-handle {
+          transform: translateX(18px);
+        }
+      }
+    }
+  }
+
+  .app-switch-box {
+    display: block;
+    width: 40px;
+    padding: 3px;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    background: var(--white);
+    transition: all 0.35s;
+  }
+
+  .app-switch-handle {
+    display: block;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--gray-dark);
+    transition: all 0.35s;
+  }
+}
