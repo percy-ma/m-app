@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Button, Form, Input, message, Select } from '../../components';
 import request from '../../api/request';
 import './index.scss';
@@ -93,11 +93,15 @@ export default function Todo() {
       });
   };
 
+  useEffect(() => {
+    getTodoList();
+  }, []);
+
   return (
     <div className="content-middle">
       <h3 className="title">Todo</h3>
       <div className="todo-container">
-        <div id="add-box" className="card">
+        <div id="add-box" className="card"> 
           <Form ref={ref} onFinish={addTodo}>
             <Form.Item
               name="title"
@@ -108,10 +112,10 @@ export default function Todo() {
                 },
               ]}
             >
-              <Input label="Title"/>
+              <Input label="Title" />
             </Form.Item>
-            <Form.Item name="description" >
-              <Input label="Description"/>
+            <Form.Item name="description">
+              <Input label="Description" />
             </Form.Item>
             <Form.Item
               name="priority"
@@ -136,42 +140,48 @@ export default function Todo() {
         <div id="list-box" className="card">
           <div className="card-title">
             <span>Todo List</span>
-            <Button onClick={getTodoList}>Refresh</Button>
+            <Button className='refresh-btn' onClick={getTodoList}>Refresh</Button>
           </div>
-          {todoList.map((item, index) => {
-            return (
-              <div className="todo-list-item" key={item.id}>
-                <div
-                  className="done-dot"
-                  onClick={() => setTodoItemDone(item, !item.done, index)}
-                >
-                  <span className='done-dot-inner'></span>
-                </div>
-                <div
-                  className={
-                    item.done ? 'item-content item-done' : 'item-content'
-                  }
-                >
-                  <div>{item.title}</div>
-                  {item.priority === 1 && (
-                    <div className="priority priority-low">LOW</div>
-                  )}
-                  {item.priority === 2 && (
-                    <div className="priority priority-medium">MEDIUM</div>
-                  )}
-                  {item.priority === 3 && (
-                    <div className="priority priority-high">HIGH</div>
-                  )}
-                </div>
-                <Button
-                  className="delete-btn"
-                  onClick={() => deleteTodoItem(item.id, index)}
-                >
-                  Delete
-                </Button>
-              </div>
-            );
-          })}
+          <div className="todo-list">
+            {todoList.length === 0 && (
+              <div className="todo-list-empty">Free Now!!</div>
+            )}
+            {todoList.length !== 0 &&
+              todoList.map((item, index) => {
+                return (
+                  <div className="todo-list-item" key={item.id}>
+                    <div
+                      className="done-dot"
+                      onClick={() => setTodoItemDone(item, !item.done, index)}
+                    >
+                      <span className="done-dot-inner"></span>
+                    </div>
+                    <div
+                      className={
+                        item.done ? 'item-content item-done' : 'item-content'
+                      }
+                    >
+                      <div>{item.title}</div>
+                      {item.priority === 1 && (
+                        <div className="priority priority-low">LOW</div>
+                      )}
+                      {item.priority === 2 && (
+                        <div className="priority priority-medium">MEDIUM</div>
+                      )}
+                      {item.priority === 3 && (
+                        <div className="priority priority-high">HIGH</div>
+                      )}
+                    </div>
+                    <Button
+                      className="delete-btn"
+                      onClick={() => deleteTodoItem(item.id, index)}
+                    >
+                      Delete
+                    </Button>
+                  </div>
+                );
+              })}
+          </div>
         </div>
       </div>
     </div>

@@ -39,7 +39,7 @@ export default function Calendar() {
         day: dayjs(itemDay).date(),
         date: itemDay,
         selectClass: dayjs(itemDay).isSame(selectDate, 'day')
-          ? 'is-selected'
+          ? ' is-selected'
           : '',
         notThisMonth:
           dayjs(itemDay).month() + 1 !== month ? ' not-this-month' : '',

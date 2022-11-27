@@ -10,6 +10,9 @@
     background: transparent;
     color: var(--black);
     font-size: 16px;
+    &::-ms-reveal {
+      display: none;
+    }
     &.has-error {
       border: 2px solid var(--red);
       &:focus {
