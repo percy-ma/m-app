@@ -12,7 +12,13 @@
     background-color: var(--primary);
     border: none;
   }
-
+  &.link-btn {
+    padding: 0;
+    text-decoration: underline;
+    background-color: none;
+    border: none;
+    border-radius: none;
+  }
 //   &:hover {
 //     border-color: var(--border-hover);
 //   }

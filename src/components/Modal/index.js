@@ -5,6 +5,7 @@ import './index.scss';
 
 function Modal(props) {
   const {
+    className = '',
     children,
     visible = false,
     onOk,
@@ -17,14 +18,20 @@ function Modal(props) {
 
   const ModalContent = () => {
     return (
-      <div className="modal">
-        {/* <div className="modal-overlay"></div> */}
+      <div className={`modal ${className}`}>
+        <div className="modal-overlay"></div>
         <div className="modal-box">
-          {showExitBtn && <div className="modal-close" onClick={onCancel}>x</div>}
-          <div className="modal-content">{children}</div>
-          <div className="modal-button">
-            {okBtn && <button onClick={onOk}>{okBtn}</button>}
-            {cancelBtn && <button onClick={onCancel}>{cancelBtn}</button>}
+          <div>
+            {showExitBtn && (
+              <div className="modal-close" onClick={onCancel}>
+                x
+              </div>
+            )}
+            <div className="modal-content">{children}</div>
+            <div className="modal-button">
+              {okBtn && <button onClick={onOk}>{okBtn}</button>}
+              {cancelBtn && <button onClick={onCancel}>{cancelBtn}</button>}
+            </div>
           </div>
         </div>
       </div>
@@ -47,12 +54,13 @@ function Modal(props) {
 Modal.useModal = useModal;
 
 Modal.propTypes = {
+  className: PropTypes.string,
   visible: PropTypes.bool,
   okBtn: PropTypes.string,
   cancelBtn: PropTypes.string,
   onOk: PropTypes.func,
   onCancel: PropTypes.func,
-  showExitBtn: PropTypes.bool
+  showExitBtn: PropTypes.bool,
 };
 
 export default Modal;

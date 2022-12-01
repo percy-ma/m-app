@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import './index.scss'
 
 let timer;
 export default function Spin(props) {
@@ -18,7 +19,9 @@ export default function Spin(props) {
     }
   }, [props.visible]);
 
-  return <div className={visible ? 'app-spin' : 'app-spin hide'}></div>;
+  return <div className={visible ? 'spin-box' : 'spin-box hide'}>
+    <div className='loading'></div>
+  </div>;
 }
 
 Spin.propTypes = {

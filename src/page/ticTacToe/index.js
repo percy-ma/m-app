@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Error, HandleRound } from '@icon-park/react';
-import { message, Radio, Button } from '../../components'
+import { message, Radio, Button, Spin } from '../../components'
 import './index.scss';
 
 export default function TicTacToe() {
@@ -8,6 +8,7 @@ export default function TicTacToe() {
   const [currentPlayer, setCurrentPlayer] = useState('x');
   const [squareArr, setSquareArr] = useState(new Array(9).fill(''));
   const [winner, setWinner] = useState('');
+  const [loading, setLoading] = useState(false)
   const WIN_RESULT = [
     [0, 1, 2],
     [3, 4, 5],
@@ -64,6 +65,7 @@ export default function TicTacToe() {
   };
 
   const autoPlay = (currentPlayer) => {
+    setLoading(true)
     let randomIndexArr = [];
     for (let i = 0; i < squareArr.length; i++) {
       if (squareArr[i] === '') {
@@ -76,6 +78,7 @@ export default function TicTacToe() {
       squareArr[randomIndex] = currentPlayer === 'x' ? 'o' : 'x';
       setSquareArr([...squareArr]);
       clearTimeout(playTimer);
+      setLoading(false)
     }, 1000);
   };
 
@@ -101,6 +104,7 @@ export default function TicTacToe() {
       </div>
       <div className="currentPlayer">Current Player: {currentPlayer}</div>
       <div className="board">
+        <Spin visible={loading}/>
         {squareArr.map((square, index) => {
           return (
             <Square

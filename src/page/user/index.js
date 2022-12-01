@@ -1,13 +1,9 @@
-import Cookie from 'js-cookie';
 import { Tab } from '../../components';
 import Login from './login';
 import Signup from './signup';
 import './index.scss'
 
 export default function User() {
-  const logout = () => {
-    Cookie.remove('app_token');
-  };
 
   return (
     <div className="content-middle">
@@ -23,10 +19,6 @@ export default function User() {
           </div>
         </Tab.Item>
       </Tab>
-
-      <button className="primary-btn" onClick={logout}>
-        Log Out
-      </button>
     </div>
   );
 }

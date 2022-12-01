@@ -1,8 +1,10 @@
 import Cookie from 'js-cookie';
 import request from '../../api/request';
 import { Form, Input, message } from '../../components';
+import { useReducerContext } from '../../utils/auth'
 
 export default function Login() {
+  const [state, dispatch] = useReducerContext()
   const loginSubmit = (data) => {
     console.log(data);
     request
@@ -20,6 +22,8 @@ export default function Login() {
           Cookie.set('app_token', res.data.tokenInfo.token, {
             expires: token_expire,
           });
+          dispatch({type: "login", payload: 'test'})
+          console.log(state.authStatus)
         }
       })
       .catch((err) => {

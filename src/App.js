@@ -16,6 +16,9 @@ import Home from './page/home';
 import Calendar from './page/calendar';
 import Website from './page/websites';
 import NotFound from './page/404';
+import LoginSidebar from './page/userLogin/LoginSidebar'
+
+import { ReducerProvider } from './utils/auth';
 
 export default function App() {
   useEffect(() => {
@@ -26,38 +29,44 @@ export default function App() {
 
   return (
     <div className="app">
-      <BrowserRouter>
-        <div className="nav-bar">
-          <NavLink to="home">Home</NavLink>
-          <NavLink to="user">User</NavLink>
-          <div className="group-title">
-            <span>APP</span>
+      <ReducerProvider>
+        <BrowserRouter>
+          <div className="nav-bar">
+            <NavLink to="home">Home</NavLink>
+            <NavLink to="user">User</NavLink>
+            <div className="group-title">
+              <span>APP</span>
+            </div>
+            <NavLink to="todo">Todo</NavLink>
+            <NavLink to="calendar">Calendar</NavLink>
+            <NavLink to="tic-tac-toe">Tic Tac Toe</NavLink>
+            <NavLink to="github-user-search">Github User Search</NavLink>
+            <NavLink to="password-generator">Password Generator</NavLink>
+            <div className="group-title">
+              <span>Collection</span>
+            </div>
+            <NavLink to="website">Website</NavLink>
+            <LoginSidebar />
           </div>
-          <NavLink to="todo">Todo</NavLink>
-          <NavLink to="calendar">Calendar</NavLink>
-          <NavLink to="tic-tac-toe">Tic Tac Toe</NavLink>
-          <NavLink to="github-user-search">Github User Search</NavLink>
-          <NavLink to="password-generator">Password Generator</NavLink>
-          <div className="group-title">
-            <span>Collection</span>
+          <div className="main-content">
+            <Routes>
+              <Route path="/" element={<Navigate to="home" />} />
+              <Route path="home" element={<Home />} />
+              <Route path="user" element={<User />} />
+              <Route path="todo" element={<Todo />} />
+              <Route path="calendar" element={<Calendar />} />
+              <Route path="tic-tac-toe" element={<TicTacToe />} />
+              <Route path="github-user-search" element={<GithubUserSearch />} />
+              <Route
+                path="password-generator"
+                element={<PasswordGenerator />}
+              />
+              <Route path="website" element={<Website />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
           </div>
-          <NavLink to="website">Website</NavLink>
-        </div>
-        <div className="main-content">
-          <Routes>
-            <Route path="/" element={<Navigate to="home" />} />
-            <Route path="home" element={<Home />} />
-            <Route path="user" element={<User />} />
-            <Route path="todo" element={<Todo />} />
-            <Route path="calendar" element={<Calendar />} />
-            <Route path="tic-tac-toe" element={<TicTacToe />} />
-            <Route path="github-user-search" element={<GithubUserSearch />} />
-            <Route path="password-generator" element={<PasswordGenerator />} />
-            <Route path="website" element={<Website />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </div>
-      </BrowserRouter>
+        </BrowserRouter>
+      </ReducerProvider>
     </div>
   );
 }
