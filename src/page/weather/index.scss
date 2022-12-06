@@ -1,0 +1,23 @@
+.weather-box {
+    border: 1px solid var(--border);
+}
+.now-weather-box {
+    display: flex;
+    flex-direction: column;
+    .temp {
+        font-size: 20px;
+        font-weight: 700;
+    }
+}
+.multi-hours-box {
+  display: flex;
+}
+.multi-days-box {
+  display: flex;
+
+  .multi-days-item {
+    border: 1px solid var(--border);
+    margin: 0 20px;
+    cursor: pointer;
+  }
+}

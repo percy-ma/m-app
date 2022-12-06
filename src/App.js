@@ -14,6 +14,7 @@ import PasswordGenerator from './page/passwordGenerator';
 import TicTacToe from './page/ticTacToe';
 import Home from './page/home';
 import Calendar from './page/calendar';
+import Weather from './page/weather'
 import Website from './page/websites';
 import NotFound from './page/404';
 import LoginSidebar from './page/userLogin/LoginSidebar'
@@ -37,6 +38,7 @@ export default function App() {
             <div className="group-title">
               <span>APP</span>
             </div>
+            <NavLink to="weather">Weather</NavLink>
             <NavLink to="todo">Todo</NavLink>
             <NavLink to="calendar">Calendar</NavLink>
             <NavLink to="tic-tac-toe">Tic Tac Toe</NavLink>
@@ -53,6 +55,7 @@ export default function App() {
               <Route path="/" element={<Navigate to="home" />} />
               <Route path="home" element={<Home />} />
               <Route path="user" element={<User />} />
+              <Route path="weather" element={<Weather />} />
               <Route path="todo" element={<Todo />} />
               <Route path="calendar" element={<Calendar />} />
               <Route path="tic-tac-toe" element={<TicTacToe />} />

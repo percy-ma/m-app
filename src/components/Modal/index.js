@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import Portal from '../Portal';
 import useModal from './useModal';
@@ -16,9 +17,9 @@ function Modal(props) {
     portal = true,
   } = props;
 
-  const ModalContent = () => {
+  const ModalContent = useCallback((props) => {
     return (
-      <div className={`modal ${className}`}>
+      <div className={`modal ${className} ${props.visible ? 'open' : ''}`}>
         <div className="modal-overlay"></div>
         <div className="modal-box">
           <div>
@@ -36,17 +37,16 @@ function Modal(props) {
         </div>
       </div>
     );
-  };
+  }, []);
   return (
     <>
-      {visible &&
-        (portal ? (
-          <Portal>
-            <ModalContent />
-          </Portal>
-        ) : (
-          <ModalContent />
-        ))}
+      {portal ? (
+        <Portal>
+          <ModalContent visible={visible} />
+        </Portal>
+      ) : (
+        <ModalContent />
+      )}
     </>
   );
 }

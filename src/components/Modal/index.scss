@@ -4,6 +4,10 @@
   left: 0;
   right: 0;
   bottom: 0;
+  visibility: hidden;
+  &.open {
+    visibility: visible;
+  }
   &-overlay {
     position: absolute;
     top: 0;
@@ -12,11 +16,13 @@
     bottom: 0;
     background-color: var(--gray-light);
     opacity: 0.5;
+    visibility: hidden;
     z-index: 10;
+    transition: 0.5s;
   }
 
   &-box {
-    width: 440px;
+    width: 400px;
     height: 340px;
     background-color: var(--white);
     position: absolute;
@@ -25,6 +31,10 @@
     transform: translate(-50%, -50%);
     z-index: 11;
     box-shadow: 0px 24px 73px rgba(23, 22, 69, 0.08);
+    transition: 0.5s;
+    scale: 1;
+    opacity: 0;
+    visibility: hidden;
     > div {
       position: relative;
       z-index: 12;
@@ -46,7 +56,31 @@
     font-size: 32px;
     font-weight: 600;
     &:hover {
-      opacity: .75;
+      opacity: 0.75;
     }
+  }
+
+  &.open {
+    .modal-overlay {
+      opacity: 1;
+      visibility: visible;
+    }
+    .modal-box {
+      opacity: 1;
+      visibility: visible;
+      animation: modal-in 0.5s;
+    }
+  }
+}
+
+@keyframes modal-in {
+  0% {
+    translate: -50% 100%;
+    scale: 0.5;
+  }
+  100% {
+    opacity: 1;
+    scale: 1;
+    visibility: visible;
   }
 }
