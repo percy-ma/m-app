@@ -1,0 +1,94 @@
+.app-select {
+  position: relative;
+  height: 46px;
+  padding-left: 14px;
+  border: 2px solid var(--border);
+  background-color: transparent;
+  border-radius: 4px;
+  cursor: pointer;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  &.has-error {
+    border: 2px solid var(--red);
+  }
+  &:focus {
+    border: 2px solid var(--border-hover);
+  }
+  label {
+    position: absolute;
+    top: 50%;
+    translate: 0 -50%;
+    pointer-events: none;
+    color: var(--gray);
+    transition: 0.3s;
+    left: 10px;
+    padding: 4px 4px;
+    &.transform {
+      background: var(--white);
+      color: var(--border-focus);
+      font-weight: 700;
+      translate: 0 -36px;
+    }
+  }
+  .app-select-input {
+    user-select: none;
+    &.arrow-show {
+      &::before,
+      &::after {
+        position: absolute;
+        right: 15px;
+        content: '';
+        display: block;
+        width: 2.5px;
+        height: 7px;
+        background: #757573;
+        transform: rotate(50deg);
+        top: 18px;
+        transition: all 0.25s ease;
+      }
+      &::after {
+        transform: rotate(130deg);
+        right: 19px;
+      }
+    }
+    &.active.arrow-show {
+      &::before {
+        transform: rotate(130deg);
+      }
+      &::after {
+        transform: rotate(50deg);
+      }
+    }
+  }
+  .app-options {
+    transform: scaleY(0);
+    transform-origin: 0% 0;
+    position: absolute;
+    left: -2px;
+    top: 100%;
+    width: calc(100% + 2 * 2px);
+    padding: 8px 8px;
+    cursor: pointer;
+    background-color: var(--white);
+    border: 2px solid var(--border);
+    transition: all 0.25s ease-in-out;
+    z-index: 1;
+    visibility: hidden;
+    opacity: 0;
+    &.active {
+      transform: scaleY(1);
+      visibility: visible;
+      opacity: 1;
+    }
+    .app-option {
+      padding: 3px 10px;
+      user-select: none;
+      transition: all 0.15s ease-in-out;
+      &:hover {
+        background-color: var(--gray-light);
+        font-weight: 700;
+      }
+    }
+  }
+}

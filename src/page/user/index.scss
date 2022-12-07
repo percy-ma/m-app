@@ -1,0 +1,11 @@
+.user-card {
+  width: 34%;
+}
+
+.form-item-name {
+  display: inline-block;
+  width: 48%;
+  &:nth-of-type(2) {
+    margin-left: 4%;
+  }
+}

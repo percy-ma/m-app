@@ -1,0 +1,27 @@
+.tic-tac-toe {
+  .board {
+    position: relative;
+    width: 180px;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .square {
+    margin: 10px;
+    border: 2px solid var(--border);
+    height: 40px;
+    width: 40px;
+    cursor: pointer;
+    text-align: center;
+    span {
+      font-size: 24px;
+      font-weight: 700;
+    }
+    .player-x {
+      color: var(--red-dark);
+    }
+    .player-o {
+      color: var(--blue-dark);
+    }
+  }
+}
