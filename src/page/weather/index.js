@@ -43,6 +43,7 @@ const getGeo = () => {
 const Weather = () => {
   const [city, setCity] = useState(null);
   const [nowWeather, setNowWeather] = useState(null);
+  const [todayWeatherStatus, setTodayWeatherStatus] = useState({});
   const [sevenDaysWeather, setSevenDaysWeather] = useState([]);
   const [tfHoursWeather, setTfHoursWeather] = useState([]);
 
@@ -57,7 +58,10 @@ const Weather = () => {
   };
   const get7daysWeather = async (location) => {
     let result = await fn_get7daysWeather(location);
-    result && setSevenDaysWeather([...result]);
+    if (result) {
+      setTodayWeatherStatus(result[0]);
+      setSevenDaysWeather([...result]);
+    }
   };
   const get24hoursWeather = async (location) => {
     let result = await fn_get24HoursWeather(location);
@@ -79,118 +83,185 @@ const Weather = () => {
   const getDayDetailWeather = (detail) => {
     console.log(detail);
   };
+  
+  const [hourWeatherLeft, setHourWeatherLeft] = useState(0)
+  const [moveActive, setMoveActive] = useState(false)
+  const [startPosition, setStartPosition] = useState(0)
+  const [mouseX, setMouseX] = useState(0)
+  const mouseDown = (e) => {
+    setMoveActive(true)
+    setMouseX(e.clientX)
+  }
+  const mouseMove = (e) => {
+    if(moveActive) {
+      let distance = startPosition + (e.clientX - mouseX)
+      
+      if(distance < 0) {
+        console.log(hourWeatherLeft, e.clientX, mouseX, distance)
+        setHourWeatherLeft(distance)
+      }
+      
+    }
+    
+  }
+  const mouseUp = (e) => {
+    setStartPosition(hourWeatherLeft)
+    setMoveActive(false)
+  }
 
   useEffect(() => {
     getData();
     // getEcharts();
   }, []);
 
+  // useEffect(() => {
+  //   getEcharts(sevenDaysWeather);
+  // }, [sevenDaysWeather]);
+
   return (
-    <>
-      <div className="now-weather-box weather-box">
+    <div className="weather-container card">
+      <div>
         {nowWeather && (
-          <>
-            <span>{city.name}, {city.adm2}, {city.adm1}</span>
-            <span className='temp'>{nowWeather.temp}°C</span>
-            <i className={`qi-${nowWeather.icon}`}></i>
-            <span>{nowWeather.text}</span>
-            {/* <span>humidity: {nowWeather.humidity}%</span> */}
-          </>
+          <div className="now-weather-box card weather-box">
+            <span className="temp">{nowWeather.temp}°C</span>
+            <div>{todayWeatherStatus.tempMin}°C / {todayWeatherStatus.tempMax}°C</div>
+            <div>
+              <i className={`icon qi-${nowWeather.icon}`}></i>
+              <span className="text">{nowWeather.text}</span>
+            </div>
+            <span className="location">
+              {city.name}, {city.adm2}, {city.adm1}
+            </span>
+            <span className="datetime">{dayjs().format('DD MMM, YYYY')}</span>
+          </div>
+        )}
+        {tfHoursWeather.length > 0 && (
+          <div className="multi-hours-box card weather-box">
+            <div onMouseDown={mouseDown} onMouseUp={mouseUp} onMouseMove={mouseMove} style={{left: hourWeatherLeft+'px'}}>
+              {tfHoursWeather.map((houritem) => (
+                <div className="multi-hours-item" key={houritem.fxTime}>
+                  <span>{dayjs(houritem.fxTime).format('HH:mm')}</span>
+                  <span>{houritem.temp}°C</span>
+                  <i className={`qi-${houritem.icon}`}></i>
+                </div>
+              ))}
+            </div>
+          </div>
         )}
       </div>
-
-      <div className="multi-hours-box weather-box">
-        {tfHoursWeather.length > 0 &&
-          tfHoursWeather.map((houritem) => (
-            <div className="multi-hours-item" key={houritem.fxTime}>
-              <div>{dayjs(houritem.fxTime).format('HH:mm')}</div>
-              <div>{houritem.temp}°C</div>
-              <i className={`qi-${houritem.icon}`}></i>
-            </div>
-          ))}
+      <div>
+        {sevenDaysWeather.length > 0 && (
+          <div className="multi-days-box card weather-box">
+            {sevenDaysWeather.map((dayitem) => (
+              <div
+                className="multi-days-item"
+                key={dayitem.fxDate}
+                onClick={() => getDayDetailWeather(dayitem)}
+              >
+                <i className={`qi-${dayitem.iconDay}`}></i>
+                <div>
+                  <span>{dayitem.tempMin}°C</span>/
+                  <span>{dayitem.tempMax}°C</span>
+                </div>
+                <span>{dayjs(dayitem.fxDate).format('ddd')}</span>
+                <span>{dayjs(dayitem.fxDate).format('MMM/DD')}</span>
+              </div>
+            ))}
+          </div>
+        )}
+        {nowWeather && (
+          <div className="weather-status-box card weather-box">
+            <div>Humidity: {nowWeather.humidity}%</div>
+            <div>windDir: {nowWeather.windDir}</div>
+            <div>windScale: {nowWeather.windScale}km/h</div>
+            <div>Visibility: {nowWeather.vis}km</div>
+            <div>Feels Like: {nowWeather.feelsLike}°C</div>
+            <div>UV Index: {todayWeatherStatus.uvIndex}</div>
+            <div>Sunrise: {todayWeatherStatus.sunrise}</div>
+            <div>Sunset: {todayWeatherStatus.sunset}</div>
+          </div>
+        )}
       </div>
-
-      <div className="multi-days-box weather-box">
-        {sevenDaysWeather.length > 0 &&
-          sevenDaysWeather.map((dayitem) => (
-            <div
-              className="multi-days-item"
-              key={dayitem.fxDate}
-              onClick={() => getDayDetailWeather(dayitem)}
-            >
-              <div>{dayjs(dayitem.fxDate).format('ddd')}</div>
-              <div>{dayjs(dayitem.fxDate).format('MM/DD')}</div>
-              <div>{dayitem.tempMax}°C</div>
-              <div>{dayitem.tempMin}°C</div>
-              <i className={`qi-${dayitem.iconDay}`}></i>
-              <i className={`qi-${dayitem.textDay}`}></i>
-            </div>
-          ))}
-      </div>
-
       {/* <div
         id="seven-days-chart"
-        style={{ width: '400px', height: '400px' }}
+        style={{ width: '400px', height: '200px' }}
       ></div> */}
-    </>
+    </div>
   );
 };
 
 export default Weather;
 
-//   let getEcharts = (weatherData) => {
-//     let minTempList = [];
-//     let maxTempList = [];
-//     let dateList = [];
-//     if (weatherData) {
-//       for (let i = 0; i < weatherData.length; i++) {
-//         dateList.push(dayjs(weatherData[i].fxDate).format('YY/DD'));
-//         minTempList.push(weatherData[i].tempMin);
-//         maxTempList.push(weatherData[i].tempMax);
-//       }
-//       let weatherChart = echarts.init(
-//         document.getElementById('seven-days-chart')
-//       );
-//       weatherChart.setOption({
-//         animation: false,
-//         xAxis: {
-//           data: dateList,
-//           position: 'top',
-//           axisLine: { show: false },
-//           axisTick: { show: false },
-//         },
-//         yAxis: {
-//           axisLine: { show: false },
-//           axisTick: { show: false },
-//           axisLabel: { show: false },
-//           splitLine: { show: false },
-//         },
-//         series: [
-//           {
-//             data: maxTempList,
-//             type: 'line',
-//             smooth: true,
-//             stack: 'max',
-//             label: {
-//               show: true,
-//               position: 'top',
-//             },
-//           },
-//           {
-//             data: minTempList,
-//             type: 'line',
-//             smooth: true,
-//             stack: 'min',
-//             label: {
-//               show: true,
-//               position: 'bottom',
-//             },
-//           },
-//         ],
-//       });
-//     }
-//   };
+const SemiCircle = () => {
+  return (
+    <div className='box0'>
+      {/* <div className='progress-circle'></div>
+      <div className='progress-rotate'>
+        <div className='progress-dot'></div>
+      </div>
+      <div className='progress-inner-circle'></div> */}
+      <div className='box1'></div>
+      <div className='box2'></div>
+      <div className='box3'><span className='dot'></span></div>
+    </div>
+    
+    // <div className='circular-content'>
+    //   <div className='circulars'>
+    //     <div className='ring'><div className='double-circle'></div></div>
+    //   </div>
+    // </div>
+  )
+}
 
-//   useEffect(() => {
-//     getEcharts(sevenDaysWeather);
-//   }, [sevenDaysWeather]);
+  let getEcharts = (weatherData) => {
+    let minTempList = [];
+    let maxTempList = [];
+    let dateList = [];
+    if (weatherData) {
+      for (let i = 0; i < weatherData.length; i++) {
+        dateList.push(dayjs(weatherData[i].fxDate).format('YY/DD'));
+        minTempList.push(weatherData[i].tempMin);
+        maxTempList.push(weatherData[i].tempMax);
+      }
+      let weatherChart = echarts.init(
+        document.getElementById('seven-days-chart')
+      );
+      weatherChart.setOption({
+        animation: false,
+        xAxis: {
+          data: dateList,
+          position: 'top',
+          axisLine: { show: false },
+          axisTick: { show: false },
+        },
+        yAxis: {
+          axisLine: { show: false },
+          axisTick: { show: false },
+          axisLabel: { show: false },
+          splitLine: { show: false },
+        },
+        series: [
+          {
+            data: maxTempList,
+            type: 'line',
+            stack: 'max',
+            label: {
+              show: true,
+              position: 'top',
+            },
+          },
+          {
+            data: minTempList,
+            type: 'line',
+            stack: 'min',
+            label: {
+              show: true,
+              position: 'bottom',
+            },
+          },
+        ],
+      });
+    }
+  };
+
+  

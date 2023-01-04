@@ -11,7 +11,7 @@ const api_24hoursWeather = `https://devapi.qweather.com/v7/weather/24h`;
 export const fn_getCity = async (location) => {
   try {
     const res = await axios.get(
-      `${api_getCity}?key=${apikey}&location=${location.lon},${location.lat}`
+      `${api_getCity}?lang=en&key=${apikey}&location=${location.lon},${location.lat}`
     );
     if (res.data.code === '200') {
       console.log(res.data.location[0]);
@@ -29,7 +29,7 @@ export const fn_getCity = async (location) => {
 export const fn_getNowWeather = async (location) => {
   try {
     const res = await axios.get(
-      `${api_nowWeather}?key=${apikey}&location=${location.lon},${location.lat}`
+      `${api_nowWeather}?lang=en&key=${apikey}&location=${location.lon},${location.lat}`
     );
     if (res.data.code === '200') {
       console.log(res.data.now);
@@ -47,7 +47,7 @@ export const fn_getNowWeather = async (location) => {
 export const fn_get7daysWeather = async (location) => {
   try {
     const res = await axios.get(
-      `${api_7daysWeather}?key=${apikey}&location=${location.lon},${location.lat}`
+      `${api_7daysWeather}?lang=en&key=${apikey}&location=${location.lon},${location.lat}`
     );
     if (res.data.code === '200') {
       console.log(res.data.daily);
@@ -65,7 +65,7 @@ export const fn_get7daysWeather = async (location) => {
 export const fn_get24HoursWeather = async (location) => {
   try {
     const res = await axios.get(
-      `${api_24hoursWeather}?key=${apikey}&location=${location.lon},${location.lat}`
+      `${api_24hoursWeather}?lang=en&key=${apikey}&location=${location.lon},${location.lat}`
     );
     if (res.data.code === '200') {
       console.log(res.data.hourly);

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Modal, Form, Input, message } from '../../components';
+import { Modal, Form, Input, message, Button } from '../../components';
 import Cookie from 'js-cookie';
 import request from '../../api/request';
 import { useReducerContext } from '../../utils/auth';
@@ -7,6 +7,10 @@ import './index.scss';
 
 function LoginModal(props) {
   const [visible, setVisible] = useState(false);
+
+  const changeToSignUp = () => {
+
+  }
 
   useEffect(() => {
     setVisible(props.visible);
@@ -52,7 +56,8 @@ function LoginModal(props) {
               res.data.userInfo.firstname + ' ' + res.data.userInfo.lastname,
           });
           props.closeModal();
-          console.log(state.userStatus);
+        } else {
+
         }
       })
       .catch((err) => {
@@ -72,7 +77,6 @@ function LoginModal(props) {
         {/* Email */}
         <Form.Item
           name="email"
-          // label="Email"
           rules={[
             {
               required: true,
@@ -93,12 +97,13 @@ function LoginModal(props) {
             {
               required: true,
               message: 'Password required!!!',
-            },
+            }
           ]}
         >
           <Input label="Password" type="password" />
         </Form.Item>
       </Form>
+      <Button type='link'>Sign Up</Button>
     </Modal>
   );
 }
